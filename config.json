@@ -1,0 +1,24 @@
+{
+    "app" : "Kipenzi",
+    "browser_version" : "0.0",
+    "couchbase": {
+        "server": "127.0.0.1:8091",
+        "username": "Administrator",
+        "password": "password",
+        "buckets": {
+            "profiles": "profiles",
+            "user_store": "user_store"   
+        }
+    },
+    "encoding": {
+        "base64": "base64",
+        "hex": "hex"
+    },
+    "environment": "development",
+    "hash_key": "kipenzi!23$",
+    "facebook": {
+        "app_id": "1751077018512546",
+        "app_secret": "d8c64e00ecaafd0ab4ce1adc9b892fa7"
+    },
+    "url": "localhost:8765/"
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="kipenzi">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kipenzi-Bro</title>
+
+    <!-- angular -->
+    <script src="../vendors/angular/angular.min.js"></script>
+    <script src="../vendors/angular-route/angular-route.min.js"></script>
+      
+    <!-- satellizer -->
+    <script src="../vendors/satellizer/satellizer.min.js"></script> 
+      
+    <!-- custom -->
+    <script src="../javascripts/login.js"></script>
+      
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../stylesheets/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../stylesheets/custom.css" rel="stylesheet">
+  </head>
+
+<!--
+        <table>
+            <tr>
+                <td>
+                    <button ng-click="facebookauth()">SignInFacebook</button>
+                   
+                    <button ng-click="authFlow()">Get User</button>
+                      <button ng-click="logOut()">LogOut</button>
+                      <button ng-click="facebookauth('facebook')">Facebook</button>
+                </td>
+            </tr>
+        </table>
+-->
+    
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form" ng-controller="loginController" id="login-div">
+          <section class="login_content">
+            <form>
+              <h1>Kipenzi - Bro</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="email / mobile" required name="username" ng-model='username'/>
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Password" required name="password" ng-model='password'/>
+              </div>
+              <div>
+                <button ng-click="login()" class="btn btn-default submit">Log in</button>
+                <a class="reset_pass" href="#">Lost your password?</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">New to site?
+                  <a href="#signup" class="to_register"> Create Account </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Kipenzi</h1>
+                  <p>©2016 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form>
+              <h1>Create Account</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="Username" required="" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="Email" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Password" required="" />
+              </div>
+              <div>
+                <a class="btn btn-default submit" href="index.html">Submit</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Already a member ?
+                  <a href="#signin" class="to_register"> Log in </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
