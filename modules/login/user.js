@@ -3,25 +3,24 @@ var nJwt        = require('njwt');
 var secureRandom    = require('secure-random');
 var expressjwt  = require('express-jwt');
 
-
+var config      = require('../../config');
 
 var signingKey = secureRandom(256, {
     type: 'Buffer'
 }); // Create a highly random byte array of 256 bytes
+
 var auth = expressjwt({
   secret: signingKey
-  
-
 });
 
 
 var userSchema = function () {
 
-    this.email = ""; 
+    this.username = ""; 
     this.salt = "";
     this.hash = "";
     this.password = "";
-    this.auth =auth;
+    this.auth = auth;
 }
 
 
@@ -36,23 +35,20 @@ userSchema.prototype.validPassword = function  (password) {
     return this.hash === hash;
 };
 
-userSchema.prototype.generateJwt = function  () {
+userSchema.prototype.generateJwt = function  (user) {
     var expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
 
     var claims = {
-        iss: "http://myapp.com/", // The URL of your service
-        sub: "users/user1234", // The UID of the user in your system
-        scope: "self, admins",
+        iss: config.url, // The URL of your service
+        sub: user.uuid, // The UID of the user in your system
+        scope: user.role,
         exp: parseInt(expiry.getTime() / 1000)
     }
 
     var jwt = nJwt.create(claims, signingKey);
     return jwt.compact();
 
-
 };
-
-
 
 module.exports =  userSchema;

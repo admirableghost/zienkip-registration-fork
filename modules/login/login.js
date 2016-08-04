@@ -21,11 +21,7 @@ LoginUtil.login = function (username, password, done) {
         .then(function (result) {
             if (!utils.isEmpty(result[0])) {
                 //valid user
-                var user = function () {
-                    this.details = result[0][0];
-                }
-                var userObj = new user();
-                return done(null, userObj);
+                return done(null, result[0][0]);
             } else {
                 console.log(username + ' invalid username / pwd')
                 return done(null, false, {message: 'User name or password is wrong'});

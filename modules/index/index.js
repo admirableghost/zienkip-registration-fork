@@ -37,7 +37,8 @@ app.post('/login', function (req, res) {
 
             res.status(200);
             res.json({
-                "token": obj.generateJwt()
+                "token": obj.generateJwt(user),
+                "user": user
             });
         } else {
             // If user is not found

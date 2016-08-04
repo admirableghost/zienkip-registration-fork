@@ -20,6 +20,10 @@ var app = express();
 app.use(cors());
 app.use(passport.initialize());
 
+app.engine('html', require('ejs').renderFile);
+app.set('views', path.join(__dirname, '/public/views'));
+app.set('view engine', 'html');
+
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -55,7 +59,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('page_'+err.status, {
       message: err.message,
       error: err
     });
@@ -66,7 +70,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('page_'+err.status, {
     message: err.message,
     error: {}
   });
