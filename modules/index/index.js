@@ -3,6 +3,8 @@ var app         = express.Router();
 var path        = require('path');
 var passport    = require('passport');
 
+var utils       = require('../utils/utils');
+var loginUtil   = require('../login/login');
 var userSchema  = require('../login/user');
 
 var userSchemaObj   = new userSchema();
@@ -10,43 +12,13 @@ var routingAuth     = userSchemaObj.auth;
 
 module.exports = app;
 
-app.get('/', function (req, res) {
+app.get('/', /*routingAuth,*/ function (req, res) {
     res.sendFile('index.html', {
         root: path.join(__dirname, '../../public/views')
     });
 });
 
-app.get('/login', function (req, res) {
-    res.sendFile('login.html', {
-        root: path.join(__dirname, '../../public/views')
-    });
-});
-
-app.post('/login', function (req, res) {
-    passport.authenticate('local', function (err, user, info) {
-        
-        var token;
-        if (err) {
-            // If Passport throws/catches an error
-            res.status(404).json("eror passport");
-            return;
-        }
-        // If a user is found
-        if (user) {
-            var obj = new userSchema();
-
-            res.status(200);
-            res.json({
-                "token": obj.generateJwt(user),
-                "user": user
-            });
-        } else {
-            // If user is not found
-            res.status(401).json(info);
-        }
-    })(req, res);
-
-});
+app.post('/login', loginUtil.authenticateLogin);
 
 
 //app.get('/', function (req, res, next) {

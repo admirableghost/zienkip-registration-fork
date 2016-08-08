@@ -7,19 +7,32 @@
 var app = require('../app');
 var debug = require('debug')('Kipenzi:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+var config = require('../config');
 
 /**
  * Get port from environment and store in Express.
+ * and create server
  */
 
-var port = normalizePort(process.env.PORT || '8765');
+var port;
+var server;
+
+if(config.environment == 'dev') {
+    port = normalizePort(process.env.PORT || config.port.non_ssl);
+    server = http.createServer(app);
+    
+} else {
+    var key = fs.readFileSync( __dirname + '/key.pem', 'utf8' );
+    var cer = fs.readFileSync( __dirname + '/sercer.crt', 'utf8' );
+    
+    server = https.createServer({key: key, cer: cer}, app);
+    port = normalizePort(process.env.PORT || config.port.ssl);
+}
+
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,0 +1,37 @@
+    <div>
+      <div class="login_wrapper">
+        <div class="animate form login_form" id="login-div">
+          <section class="login_content">
+            <form>
+              <h1>Kipenzi - Bro</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="email / mobile" required name="username" ng-model="username"/>
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Password" required name="password" ng-model="password"/>
+              </div>
+              <div>
+                <button ng-click="login()" class="btn btn-default submit">Log in</button>
+                <a class="reset_pass" href="#">Lost your password?</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">New to site?
+                  <a href="" ng-click="go('signup')" class="to_register"> Create Account </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Kipenzi</h1>
+                  <p>©2016 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>

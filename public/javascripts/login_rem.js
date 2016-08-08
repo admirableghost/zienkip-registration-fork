@@ -1,29 +1,4 @@
-var app = angular.module('kipenzi', ['satellizer']);
-
-    app.service('userService', function() {
-
-        this.token = null;
-
-    });
-
-
-    app.factory('sessionInjector', ['userService', function(userService) {
-
-        var sessionInjector = {
-            request: function(config) {
-                // if (!SessionService.isAnonymus) {
-                // config.headers['x-session-token'] = SessionService.token;
-                //}
-                config.headers.Authorization = 'Bearer ' + userService.token;
-                alert("Inside session injector" + userService.token)
-                return config;
-            }
-        };
-        return sessionInjector;
-
-
-    }]);
-
+var app = angular.module('kipenzi-login', ['satellizer']);
 
     app.config(['$httpProvider','$authProvider', function($httpProvider,$authProvider) {
         $httpProvider.interceptors.push('sessionInjector');
@@ -50,29 +25,6 @@ var app = angular.module('kipenzi', ['satellizer']);
 
     app.controller('loginController', function($scope, $http, $window, userService,$auth) {
 
-        // native login method
-        $scope.login = function() {
-
-            $http({
-                method: "POST",
-                url: window.location.origin + "/login",
-                data: {
-                    username: $scope.username,
-                    password: $scope.password
-                }
-
-            }).then(function(response) {
-                var payload = response.data.token.split(".");
-                userService.token = response.data.token;
-                console.log("logged in successfully " + $window.atob(payload[1]));
-                window.location.href = window.location.origin;
-                
-            }, function(response, error) {
-                console.log("Error message " + response + ' :::::: ' +error);
-            });
-
-        }
- 
 
 
         $scope.authFlow = function() {

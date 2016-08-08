@@ -14,11 +14,21 @@
         "base64": "base64",
         "hex": "hex"
     },
-    "environment": "development",
-    "hash_key": "kipenzi!23$",
+    "environment": "dev",
+    "hash_key": "kipenzi$123",
     "facebook": {
         "app_id": "1751077018512546",
         "app_secret": "d8c64e00ecaafd0ab4ce1adc9b892fa7"
     },
-    "url": "localhost:8765/"
+    "port": {
+        "non_ssl": "8765",
+        "ssl": "8766"
+    },
+    "security": {
+        "key": "",
+        "cer": "",
+        "keypass": "kipenzi$123",
+        "jwt_algo": "RS256"
+    },
+    "url": "localhost:8766/"
 }

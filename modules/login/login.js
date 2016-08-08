@@ -1,12 +1,14 @@
 'use strict';
 
-var q       = require('q');
-var console = require('console');
+var q           = require('q');
+var console     = require('console');
+var passport    = require('passport');
 
-var config  = require('../../config');
-var utils   = require('../utils/utils');
-var db      = require('../../db/couchbase');
-var queries = require('../../db/couch-queries');
+var config      = require('../../config');
+var utils       = require('../utils/utils');
+var db          = require('../../db/couchbase');
+var queries     = require('../../db/couch-queries');
+var userSchema  = require('../login/user');
 
 function LoginUtil() {};
 
@@ -35,4 +37,32 @@ LoginUtil.login = function (username, password, done) {
             console.log(username + ' : ' + error.stack);
             return done(null, false, {status: false, type: 'q', message: 'please contact support'});
         });
+};
+
+LoginUtil.authenticateLogin = function (req, res) {
+    passport.authenticate('local', function (err, user, info) {
+        
+        var token;
+        if (err) {
+            console.log(err);
+            // If Passport throws/catches an error
+            res.status(404).json("eror passport");
+            return;
+        }
+        // If a user is found
+        if (user) {
+            var obj = new userSchema();
+            token = obj.generateJwt(user);
+            var tokenArray = token.split(".");
+            res.status(200);
+            utils.addCookies(req, res, {h: tokenArray[0], p: tokenArray[1], s: tokenArray[2], u: user.uuid})
+            res.json({
+                "token": token,
+            });
+        } else {
+            // If user is not found
+            res.status(401).json(info);
+        }
+    })(req, res);
+
 };

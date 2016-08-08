@@ -2,24 +2,25 @@ var crypto      = require('crypto')
 var nJwt        = require('njwt');
 var secureRandom    = require('secure-random');
 var expressjwt  = require('express-jwt');
+var fs          = require('fs');
 
 var config      = require('../../config');
+
+//var signingKey = fs.readFileSync(__dirname + '/../../bin/new/cert.pem', 'utf8');
 
 var signingKey = secureRandom(256, {
     type: 'Buffer'
 }); // Create a highly random byte array of 256 bytes
 
+
 var auth = expressjwt({
-  secret: signingKey
+//    algorithm: config.security.jwt_algo,
+    secret: signingKey
 });
 
 
-var userSchema = function () {
-
-    this.username = ""; 
-    this.salt = "";
-    this.hash = "";
-    this.password = "";
+var userSchema = function (user) {
+    this.user = user;
     this.auth = auth;
 }
 
@@ -46,7 +47,7 @@ userSchema.prototype.generateJwt = function  (user) {
         exp: parseInt(expiry.getTime() / 1000)
     }
 
-    var jwt = nJwt.create(claims, signingKey);
+    var jwt = nJwt.create(claims, signingKey); //, config.security.jwt_algo);
     return jwt.compact();
 
 };

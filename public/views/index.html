@@ -1,266 +1,58 @@
 <!DOCTYPE html>
-<html ng-app="testApp">
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
-<script src="//cdn.jsdelivr.net/satellizer/0.14.1/satellizer.min.js"></script>
+<html lang="en" ng-app="kipenzi-bro">
+  <head>
+<!--    <base href="/">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body>
+    <title>Kipenzi-Bro</title>
+
+    <!-- *********** -->
+    <!-- javascripts -->
+    <!-- *********** -->    
+      
+    <!-- angular -->
+    <script src="vendors/angular/angular.min.js"></script>
+    <script src="vendors/angular-route/angular-route.min.js"></script>
+    <script src="vendors/angular-ui-router/angular-ui-router.min.js"></script>
+    <script src="vendors/angular-animate/angular-animate.min.js"></script>
+      
+    <!-- satellizer -->
+    <script src="vendors/satellizer/satellizer.min.js"></script> 
+      
+    <!-- custom -->
+<!--    <script src="javascripts/custom.js"></script>-->
+      
+    <script src="javascripts/kipenzi-main.js"></script>
+    <script src="javascripts/kipenzi-routes.js"></script>  
     
-
-    <!--<div ng-controller="testController">
-
-        <p>Input something in the input box:</p>
-        <p>Name :
-            <input type="text" ng-model="name" placeholder="Enter name here">
-        </p>
-        <h1>Hello {{"name" + " " +    + " " + personManagerInstance.name}}</h1>
-
-    </div>
-    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" onClick=''></div>
+    <script src="javascripts/login/login.js"></script>
     
-    <div ng-view>
-    </div> -->
+    <script src="javascripts/home/home.js"></script>
+    
+    <script src="javascripts/error/error.js"></script>
+    
+    <!-- *********** -->
+    <!-- Stylesheets -->
+    <!-- *********** -->  
+      
+    <!-- Bootstrap -->
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="stylesheets/animate.min.css" rel="stylesheet">
 
-    <!--
-    <div id="fb-root"></div>
-    <div ng-controller="loginController">
-
-        <button ng-click="authenticate('facebook')">Sign in with Facebook</button>
-        <button ng-click="localAuth()">Local Sign in</button>
-    </div>
-    <div id="listTable"></div>
--->
-
-    <!-- MEAN stack testing   -->
-    <div id="login-div" ng-app="testApp" ng-controller="loginController">
-        <table>
-            <tr>
-                <td>E-Mail :</td>
-                <td>
-                    <input type="text" name="email" ng-model='email'></input>
-                </td>
-            </tr>
-            <tr>
-                <td>Password :</td>
-                <td>
-                    <input type="password" name="password" ng-model='password'></input>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button ng-click="meanLogin()">SignIn</button>
-                    <button ng-click="facebookauth()">SignInFacebook</button>
-                   
-                    <button ng-click="authFlow()">Get User</button>
-                      <button ng-click="logOut()">LogOut</button>
-                      <button ng-click="facebookauth('facebook')">Facebook</button>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <!--END-->
-<div id="listTable" />
-</body>
-
-<script>
-    var app = angular.module('testApp', ['satellizer']);
-
-    //    .config(['$httpProvider',function($httpProvider) {
-    //
-    //        $httpProvider.interceptors.push(function($location, $localStorage) {
-    //            return {
-    //                'request': function(config) {
-    //                    config.headers = config.headers || {};
-    //                    if ($localStorage.token) {
-    //                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
-    //                    }
-    //                    return config;
-    //                }
-    //
-    //
-    //
-    //            }
-    //        });
-    //
-    //    }])
-
-
-    app.service('userService', function() {
-
-        this.token = null;
-
-    });
-
-
-    app.factory('sessionInjector', ['userService', function(userService) {
-
-        var sessionInjector = {
-            request: function(config) {
-                // if (!SessionService.isAnonymus) {
-                // config.headers['x-session-token'] = SessionService.token;
-                //}
-                config.headers.Authorization = 'Bearer ' + userService.token;
-                alert("Inside session injector" + userService.token)
-                return config;
-            }
-        };
-        return sessionInjector;
-
-
-    }]);
-
-
-    app.config(['$httpProvider','$authProvider', function($httpProvider,$authProvider) {
-        $httpProvider.interceptors.push('sessionInjector');
-           $authProvider.storageType = 'sessionStorage';
-
-        $authProvider.facebook({
-            name: 'facebook',
-            url: window.location.origin + '/',
-            authorizationEndpoint: 'https://www.facebook.com/v2.0/dialog/oauth',
-            redirectUri: window.location.origin + '/',
-            requiredUrlParams: ['display', 'scope'],
-            scope: ['email'],
-            scopeDelimiter: ',',
-            display: 'popup',
-            type: '2.5',
-            responseType: 'token',
-            clientId: '1751077018512546',
-            popupOptions: {
-                width: 580,
-                height: 400
-            }
-        });
-    }])
-
-
-
-
-
-
-    app.controller('loginController', function($scope, $http, $window, userService,$auth) {
-
-
-        $scope.email = 'ashwin';
-
-
-        // MEAN login method
-        $scope.meanLogin = function() {
-            alert("Sign in Clickedaa..!!");
-            $http({
-                method: "POST",
-                url: "http://localhost:8765" + "/authenticate",
-                data: {
-                    email: $scope.email,
-                    password: $scope.password
-                }
-
-            }).then(function(response) {
-                var payload = response.data.token.split(".");
-                userService.token = response.data.token;
-                alert('JWT token after facebook login',$window.atob(payload[1]))
-
-                // alert("Saved Sucess" + $window.atob(response.data.token.split()[1]));
-                console.log("saved successfully");
-            }, function(response) {
-                console.log("Error message");
-            });
-
-        }
- 
-
-
-        $scope.authFlow = function() {
-            alert("Auth Flow in Clickedaa..!!");
-            $http({
-                method: "POST",
-                url: "http://localhost:8765" + "/api/getUserName",
-                data: {
-                    email: $scope.email,
-                    password: $scope.password
-                     
-                }
-
-            }).then(function(response) {
-                alert("Auth" + response.data);
-            }, function(response) {
-                console.log("Error message");
-            });
-
-        }
-        
-        
-        $scope.facebookauth = function(provider) {
-
-            $auth.authenticate(provider).then(function(response) {
-                 $http({
-                method: "POST",
-                url: "http://localhost:8765" + "/authenticate",
-                data: {
-                    email: $scope.email,
-                    password: $scope.password,
-                    facebooktoken: response.access_token
-                     
-                }
-
-            }).then(function(response) {
-                alert("Auth" + response.data);
-                var payload = response.data.token.split(".");
-                userService.token = response.data.token;
-                alert($window.atob(payload[1]))
-     
-            }, function(response) {
-                console.log("Error message");
-            });
-                
-                displayData($http, response.access_token)
-                alert('Success Facebook token' + response.access_token);
-                
-                
-                
-                
-            });
-        };
-
-        
-   
-        function displayData($http, access_token) {
-
-            $http.get("https://graph.facebook.com/v2.2/me", {
-                params: {
-                    access_token: access_token,
-                    fields: "name,gender,email,location,picture",
-                    format: "json"
-                }
-            }).then(function(result) {
-                var name = result.data.name;
-                var gender = result.data.gender;
-                var picture = result.data.picture;
-                alert(result.data.email)
-                alert("name " + result.access_token)
-                var html = '<table id="table" data-role="table" data-mode="column" class="ui-responsive"><thead><tr><th>Field</th><th>Info</th></tr></thead><tbody>';
-                html = html + "<tr><td>" + "Name" + "</td><td>" + name + "</td></tr>";
-                html = html + "<tr><td>" + "Gender" + "</td><td>" + gender + "</td></tr>";
-                html = html + "<tr><td>" + "Picture" + "</td><td><img src='" + picture.data.url + "' /></td></tr>";
-
-                html = html + "</tbody></table>";
-                // alert(html);
-                document.getElementById("listTable").innerHTML = html;
-                // $.mobile.changePage($("#profile"), "slide", true, true);
-            }, function(error) {
-                alert("Error: " + error);
-            });
-        }
-        
-        
-        
-         $scope.logOut = function() {
-            alert("Logging Out!");
-           
-         userService.token="";
-        }
-
-    });
-</script>
-
+    <!-- Custom Theme Style -->
+    <link href="stylesheets/custom.css" rel="stylesheet">
+  </head>
+    
+  <body class="{{bodyClass}}">
+      <div ui-view></div>
+  </body>
 </html>
