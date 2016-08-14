@@ -8,14 +8,14 @@
 
 ## Folder structure
 ------------------
-1. All the public facing components will come into the folder public
-  a. All javascripts goes to the folder public/javascripts
-  b. All css goes to the folder public/stylesheets
-  c. All htmls goes to the folder public/views
-  d. All images goes to the folder public/images
-  e. All stock stuff goes to the folder public/vendors (for instance angular.js, bootstrap and all such vendor stuff)
+### All the public facing components will come into the folder public
+1. All javascripts goes to the folder public/javascripts
+2. All css goes to the folder public/stylesheets
+3. All htmls goes to the folder public/views
+4. All images goes to the folder public/images
+5. All stock stuff goes to the folder public/vendors (for instance angular.js, bootstrap and all such vendor stuff)
 
-2. Add the necessary server modules into the folder modules
+### Add the necessary server modules into the folder modules
 
 ## Dev comments
 --------------
