@@ -9,9 +9,11 @@ var cors        = require('cors');
 
 var config      = require('./config');
 var db          = require('./db/couchbase');
-var index       = require('./modules/index/index');
+var index       = require('./modules/routes/index');
+var static      = require('./modules/routes/static');
+var uploads     = require('./modules/routes/uploads');
 
-require('./modules/login/passport');
+require('./modules/auth/passport');
 
 db.start();
 
@@ -42,8 +44,8 @@ app.use(function(req, res, next) {
         });
 
 app.use('/', index);
-//app.use('/users', users);
-//app.use('/db', database);
+app.use('/static', static);
+app.use('/uploads', uploads);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

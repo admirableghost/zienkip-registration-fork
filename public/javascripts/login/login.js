@@ -1,6 +1,6 @@
-var app = angular.module('kipenzi-login', ['satellizer', 'ngAnimate']);
+var app = angular.module('kipenzi-login', ['satellizer']);
 
-app.controller('loginController', function($scope, $rootScope, $http, $state, $auth) {
+app.controller('loginController', function($scope, $rootScope, $http, $state, userService) {
         
 //                        <button ng-click="facebookauth()">SignInFacebook</button>
 //                        <button ng-click="authFlow()">Get User</button>
@@ -21,8 +21,17 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $a
                 }
 
             }).then(function(response) {
-                window.sessionStorage.setItem('kipenzi-token', response.data.token);
+                window.localStorage.setItem('kipenzi-token', response.data.token);
+                var payload = JSON.parse(window.atob(response.data.token.split(".")[1]));
+                userService.sub = payload.sub;
+                userService.user = response.data.user;
+                window.sessionStorage.setItem('kipenzi-user', response.data.user);
                 $state.go('menu.home');
+                //------------------- Static page testing - Avvai - 21_Aug_2016
+                // * Uncomment the line above the block after removing the block
+                //$state.go('staticPage_ProfileManagement');
+                //$state.go('staticPage_Appointments');
+                //---------------------------------------
             }, function(response, error) {
                 console.log("Error message " + response + ' :::::: ' +error);
             });

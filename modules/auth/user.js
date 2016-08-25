@@ -21,9 +21,7 @@ var auth = expressjwt({
 
 var userSchema = function (user) {
     this.user = user;
-    this.auth = auth;
 }
-
 
 
 userSchema.prototype.setPassword = function  (password) {

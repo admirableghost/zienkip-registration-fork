@@ -5,10 +5,10 @@ var console     = require('console');
 var passport    = require('passport');
 
 var config      = require('../../config');
-var utils       = require('../utils/utils');
 var db          = require('../../db/couchbase');
 var queries     = require('../../db/couch-queries');
-var userSchema  = require('../login/user');
+var userSchema  = require('../auth/user');
+var utils       = require('../utils/utils');
 
 function LoginUtil() {};
 
@@ -19,7 +19,7 @@ LoginUtil.login = function (username, password, done) {
     var query = queries.login;
     var pwd = utils.generateHash(password);
     
-    db.query(config.couchbase.buckets.user_store, query, [username, pwd])
+    db.query(config.couchbase.buckets.profiles, query, [username, pwd])
         .then(function (result) {
             if (!utils.isEmpty(result[0])) {
                 //valid user
@@ -55,9 +55,10 @@ LoginUtil.authenticateLogin = function (req, res) {
             token = obj.generateJwt(user);
             var tokenArray = token.split(".");
             res.status(200);
-            utils.addCookies(req, res, {h: tokenArray[0], p: tokenArray[1], s: tokenArray[2], u: user.uuid})
+//            utils.addCookies(req, res, {h: tokenArray[0], p: tokenArray[1], s: tokenArray[2], u: user.uuid})
             res.json({
                 "token": token,
+                "user": user
             });
         } else {
             // If user is not found
@@ -65,4 +66,9 @@ LoginUtil.authenticateLogin = function (req, res) {
         }
     })(req, res);
 
+};
+
+LoginUtil.routingAuth = function() {
+    var userSchemaObj   = new userSchema();
+    return userSchemaObj.auth;
 };

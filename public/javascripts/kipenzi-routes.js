@@ -25,18 +25,39 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('menu', {
 //            url:'/',
             templateUrl:"../views/menu/dashboard.html",
-            controller: 'homeController',
-            abstract: true
+            controller: 'dashboardController'
+            
         })
     
         .state('menu.home', {
             url:'/home',
-            templateUrl:"../views/menu/home.html",
+            templateUrl:"../views/menu/menu-home.html",
+            controller: 'homeController'
+        })
+        
+        .state('menu.appointment', {
+            url:'/appointment',
+            templateUrl:"../views/menu/menu-appointment.html",
             controller: 'homeController'
         })
     
+        //--------------------------------- For testing a static page - Avvai - 21_Aug_2016
+        // * This block needs to be removed after testing
+        
+        .state('staticPage_ProfileManagement', {
+            url:'/staticPage',
+            templateUrl:"../views/menu/Profile_Management.html",
+            controller:'profile_management_controller'
+        }) 
+        
+        .state('staticPage_Appointments', {
+            url:'/staticPage',
+            templateUrl:"../views/menu/Appointments_Page.html",
+            controller:'appointment_controller'
+        }) 
+        //----------------------------------
 
-//        $urlRouterProvider.otherwise('/home/dashboard');
+        $urlRouterProvider.otherwise('/login');
     
 //        if(window.history && window.history.pushState){
 //            $locationProvider.html5Mode(true);

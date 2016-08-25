@@ -3,16 +3,13 @@ var app         = express.Router();
 var path        = require('path');
 var passport    = require('passport');
 
+var loginUtil   = require('../auth/authentication');
+var userSchema  = require('../auth/user');
 var utils       = require('../utils/utils');
-var loginUtil   = require('../login/login');
-var userSchema  = require('../login/user');
-
-var userSchemaObj   = new userSchema();
-var routingAuth     = userSchemaObj.auth;
 
 module.exports = app;
 
-app.get('/', /*routingAuth,*/ function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile('index.html', {
         root: path.join(__dirname, '../../public/views')
     });
@@ -20,7 +17,11 @@ app.get('/', /*routingAuth,*/ function (req, res) {
 
 app.post('/login', loginUtil.authenticateLogin);
 
-
+//app.all('/*', loginUtil.routingAuth, function(req, res, next){
+//    console.log('General Validations');
+//    next();
+//});
+//
 //app.get('/', function (req, res, next) {
 //    passport.authenticate('local', function(err, user, info) {
 //        if (err) {

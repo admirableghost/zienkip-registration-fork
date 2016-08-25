@@ -18,7 +18,7 @@ Database.start = function () {
     
     var couchCluster = new couchbase.Cluster(config.couchbase.server);
     buckets.profiles = couchCluster.openBucket(config.couchbase.buckets.profiles);
-    buckets.user_store = couchCluster.openBucket(config.couchbase.buckets.user_store);
+    buckets.global_static = couchCluster.openBucket(config.couchbase.buckets.global_static);
     
     for (bucket in buckets) {
         console.log("opened bucket - " + bucket);

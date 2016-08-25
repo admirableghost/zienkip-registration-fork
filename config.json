@@ -7,13 +7,14 @@
         "password": "password",
         "buckets": {
             "profiles": "profiles",
-            "user_store": "user_store"   
+            "global_static": "globl_static"
         }
     },
     "encoding": {
         "base64": "base64",
         "hex": "hex"
     },
+    "export_path": "/Users/jose/Desktop/kipenzi/kipenzi-registration/exports",
     "environment": "dev",
     "hash_key": "kipenzi$123",
     "facebook": {
