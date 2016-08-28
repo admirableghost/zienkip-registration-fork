@@ -41,7 +41,9 @@ userSchema.prototype.generateJwt = function  (user) {
     var claims = {
         iss: config.url, // The URL of your service
         sub: user.uuid, // The UID of the user in your system
-        scope: user.role,
+        role: user.role,
+        type: user.type,
+        menus: user.menus,
         exp: parseInt(expiry.getTime() / 1000)
     }
 

@@ -1,37 +1,20 @@
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--<html>-->
+<!--  <head>-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
     <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Doctor Management</title>
-
-    <!-- Bootstrap -->
-    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
-      
-
-    <!-- Custom Theme Style -->
-    <link href="../../../template/build/css/custom.min.css" rel="stylesheet">
-    <!-- Angular JS -->
-    <script src="../../vendors/angular/angular.min.js"></script>
-    <!-- jQuery -->
-    <script src="../../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="../../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../../vendors/nprogress/nprogress.js"></script>
-    <!-- jQuery Smart Wizard -->
-    <script src="../../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="../../../template/build/js/custom.min.js"></script>
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!---->
+<!--    <title>Doctor Management</title>-->
+<!--          jQuery Smart Wizard -->
+     <!-- Bootstrap -->
+<!--    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="../../vendors/jquery/dist/jquery.min.js"></script>-->
+<!--    <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--    <script src="../../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>-->
+   
+ 
     <script>
       $(document).ready(function() {
         $('#wizard').smartWizard();
@@ -45,11 +28,12 @@
         $('.buttonFinish').addClass('btn btn-default');
       });
     </script>
-  </head>
-  <body class="nav-md" ng-app="menu-profile_management" ng-controller="profile_management_controller">
+<!--  </head>-->
+<!--  <body class="nav-md" ng-app="menu-profile_management" ng-controller="profile_management_controller">-->
     <!-- <div class="container body">
       <div class="main_container">-->
         <!-- page content -->
+<!--
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -64,6 +48,7 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
+-->
                  <!-- <div class="x_title">
                     <h2>Add Doctor</h2>
                     <ul class="nav navbar-right panel_toolbox">
@@ -83,14 +68,17 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>-->
+<!--
                   <div class="x_content"> 
                         
                     <div class="clearfix"></div>
+-->
                     <!-- Smart Wizard -->
                     
-               <h2>Add new profile</h2>
+<!--               <h2>Add new profile</h2>-->
                     <!-- Tabs -->
-                    <div id="wizard_verticle" class="form_wizard wizard_verticle">
+<!--                    <div id="wizard_verticle" class="form_wizard wizard_verticle">-->
+<!--
                       <ul class="list-unstyled wizard_steps">
                         <li>
                           <a href="#step-11">
@@ -107,7 +95,13 @@
                             <span class="step_no">3</span>
                           </a>
                         </li>
+                          <li>
+                          <a href="#step-44">
+                            <span class="step_no">4</span>
+                          </a>
+                        </li>
                       </ul>
+-->
 
                       <div id="step-11">
                         <h2 class="StepTitle">Step 1</h2>
@@ -148,6 +142,7 @@
                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                   <input type="radio" name="gender" value="male" ng-model="profile_management_controller_Gender" > &nbsp; Male &nbsp;
                                 </label>
+                                  <a href="" ng-click="go('menu.profilemanagement.step2')">xyz</a>
                                 <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                   <input type="radio" name="gender" value="female" ng-model="profile_management_controller_Gender" > Female
                                 </label>
@@ -231,123 +226,18 @@
                         </form>
                           
                       </div>
-                      <div id="step-22">
-                        <h2 class="StepTitle">Step 2</h2>
-                        <form class="form-horizontal form-label-left">
-                        <span class="section">Official Information</span>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="clinic-name">Clinic Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="clinic-name" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_ClinicName" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="working-hours">Working hours <span class="required">*</span>
-                            </label>
-                            <label class="control-label col-md-1 col-sm-1 col-xs-4" for="working-from">From <span class="required">*</span>
-                            </label>
-                            <div class="col-md-2 col-sm-2 col-xs-8">
-                              <select id="working-from" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Clinic_FromTime" >
-                                <option value="6am">6am</option>
-                                <option value="7am">7am</option>
-                                <option value="8am">8am</option>
-                                <option value="9am">9am</option>
-                                <option value="10am">10am</option>
-                                <option value="11am">11am</option>
-                                <option value="12am">12am</option>
-                              </select>
-                            </div>
-                            <label class="control-label col-md-1 col-sm-1 col-xs-4" for="working-to">To <span class="required">*</span>
-                            </label>
-                            <div class="col-md-2 col-sm-2 col-xs-8">
-                              <select id="working-to" class="form-control col-md-7 col-xs-12" contenteditable="false" ng-model="profile_management_controller_Clinic_ToTime" >
-                                <option value="5pm">5pm</option> 
-                                <option value="6pm">6pm</option>
-                                <option value="7pm">7pm</option>
-                                <option value="8pm">8pm</option>
-                                <option value="9pm">9pm</option>
-                                <option value="10pm">10pm</option>
-                                <option value="11pm">11pm</option>
-                                <option value="12pm">12pm</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="consult-duration">Average Consultation Duration
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="consult-duration" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_AvgConsultDuration" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="consult-fees">Consultation Fees <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="consult-fees" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_ConsultationFees" >
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                      <div id="step-33">
-                        <h2 class="StepTitle">Step 3</h2>
-                        <form class="form-horizontal form-label-left">
-                        <span class="section">Qualifications</span>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="experience">Experience 
-                            </label>
-                            <div class="col-md-1 col-sm-1 col-xs-2">
-                              <input type="text" id="experience" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Value" >
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-4">
-                              <select id="working-to" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Duration" >
-                                <option value="months">months</option> 
-                                <option value="years">years</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="specializations">Specialization 
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="specializations" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Specialization" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="qualification">Qualifications
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="qualification" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Qualifications" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id-proof">ID Proof
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <!--<input type="text" id="id-proof" required="required" class="form-control col-md-7 col-xs-12">-->
-                              <button class="btn" type="button">Upload Image</button>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="self-description">Self description 
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                             <!-- <input type="text" id="self-description" required="required" class="form-control col-md-7 col-xs-12"> -->
-                            <textarea id="self-description" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_SelfDescription" ></textarea>
-                            </div>  
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+<!--                     </div>-->
                     <!-- End SmartWizard Content -->
+<!--
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+-->
         <!-- /page content -->
     <!--    </div>
     </div>-->
-  </body>
-</html>
+<!--  </body>-->
+<!--</html>-->

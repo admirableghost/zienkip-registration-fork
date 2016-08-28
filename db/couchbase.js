@@ -1,11 +1,12 @@
 //http://query.pub.couchbase.com/tutorial/#index
 
-var console = require('console');
-var config  = require('../config');
+var console     = require('console');
 var couchbase   = require('couchbase');
-var n1ql    = require('couchbase').N1qlQuery;
-var uuid    = require('uuid');
-var q       = require('q');
+var n1ql        = require('couchbase').N1qlQuery;
+var uuid        = require('uuid');
+var q           = require('q');
+
+var config  = require('../config');
 
 function Database() {};
 var buckets = {};
@@ -21,7 +22,7 @@ Database.start = function () {
     buckets.global_static = couchCluster.openBucket(config.couchbase.buckets.global_static);
     
     for (bucket in buckets) {
-        console.log("opened bucket - " + bucket);
+        console.log("opened bucket - " + buckets[bucket]._name);
     }
     console.log("connected to couch db"); 
 };
@@ -33,6 +34,7 @@ Database.query = function(bucket, query_string, params) {
     var query = n1ql.fromString(query_string);
     
     buckets[bucket].query(query, params, defer.makeNodeResolver());
+    
     return defer.promise;
 };
 

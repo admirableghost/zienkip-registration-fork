@@ -1,0 +1,6 @@
+{
+    "login": {
+        "invalid_username_pwd": "User name or password is wrong",
+        "contact_support": "There seems to be some issue, Please contact support"   
+    }
+}

@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 var q           = require('q');
 var console     = require('console');
@@ -7,7 +7,9 @@ var passport    = require('passport');
 var config      = require('../../config');
 var db          = require('../../db/couchbase');
 var queries     = require('../../db/couch-queries');
+var message     = require('../../message');
 var userSchema  = require('../auth/user');
+var logger      = require('../utils/logger');
 var utils       = require('../utils/utils');
 
 function LoginUtil() {};
@@ -16,26 +18,63 @@ module.exports = LoginUtil;
 
 LoginUtil.login = function (username, password, done) {
     
-    var query = queries.login;
-    var pwd = utils.generateHash(password);
+    logger.info("login", "general",  "user : " + username);
     
-    db.query(config.couchbase.buckets.profiles, query, [username, pwd])
+    var pwd = utils.generateHash(password);
+    var user;
+    
+    db.query(config.couchbase.buckets.profiles, queries.cred_check, [username, pwd])
         .then(function (result) {
             if (!utils.isEmpty(result[0])) {
                 //valid user
-                return done(null, result[0][0]);
+                logger.info("login", "general",  "validating user : " + username + " : " + result[0][0].uuid);
+                
+                db.query(config.couchbase.buckets.profiles, queries.uuid_login, [result[0][0].uuid])
+                    .then(function (result) {
+                        if (!utils.isEmpty(result[0])) {
+                            // valid uuid 
+                            logger.info("login", "general",  "valid user : " + username);
+                            user = result[0][0];
+                            
+                            db.query(config.couchbase.buckets.global_static, queries.getMenus, [user.type, user.role])
+                                .then(function (result) {
+                                    if (!utils.isEmpty(result[0])) {
+                                        //load menus
+                                        logger.info("login", "general",  "loaded menus for user : " + username);
+                                        user.menus = result[0];
+                                        return done(null, user);
+                                    } else {
+                                        logger.warn("login", "general",  "Unable to load menus for user :" + username);
+                                        return done(null, false, {message: message.login.contact_support});
+                                    }
+                                }, function (error) {
+                                    //db error
+                                    logger.error("login", "DB",  username + ' : ' + error);
+                                    return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
+                                });
+                            
+                        } else {
+                            logger.warn("login", "setup",  "UUID not found :" + username + ' : ' + result[0][0].uuid);
+                            return done(null, false, {message: message.login.invalid_username_pwd});
+                        }
+                    }, function (error) {
+                        //db error
+                        logger.error("login", "DB",  username + ' : ' + error);
+                        return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
+                    });
+                
             } else {
-                console.log(username + ' invalid username / pwd')
-                return done(null, false, {message: 'User name or password is wrong'});
+                logger.info("login", "general",  username + ' invalid username / pwd');
+                return done(null, false, {message: message.login.invalid_username_pwd});
             }
         }, function (error) {
             //db error
-            console.log(username + ' : ' + error);
-            return done(null, false, {status: false, type: 'db', message: 'please contact support'});
+            logger.error("login", "DB",  username + ' : ' + error);
+            return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
         }).catch(function (error) {
             //q error
-            console.log(username + ' : ' + error.stack);
-            return done(null, false, {status: false, type: 'q', message: 'please contact support'});
+            logger.error("login", "q",  username + ' : ' + error.stack);
+            return done(null, false, {status: false, type: 'q', message: message.login.contact_support});
         });
 };
 
@@ -46,7 +85,7 @@ LoginUtil.authenticateLogin = function (req, res) {
         if (err) {
             console.log(err);
             // If Passport throws/catches an error
-            res.status(404).json("eror passport");
+            res.status(404).json(message.login.invalid_username_pwd);
             return;
         }
         // If a user is found
@@ -57,8 +96,7 @@ LoginUtil.authenticateLogin = function (req, res) {
             res.status(200);
 //            utils.addCookies(req, res, {h: tokenArray[0], p: tokenArray[1], s: tokenArray[2], u: user.uuid})
             res.json({
-                "token": token,
-                "user": user
+                "token": token
             });
         } else {
             // If user is not found

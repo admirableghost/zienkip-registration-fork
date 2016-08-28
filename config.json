@@ -7,7 +7,7 @@
         "password": "password",
         "buckets": {
             "profiles": "profiles",
-            "global_static": "globl_static"
+            "global_static": "global_static"
         }
     },
     "encoding": {

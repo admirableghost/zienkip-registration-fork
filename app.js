@@ -10,7 +10,6 @@ var cors        = require('cors');
 var config      = require('./config');
 var db          = require('./db/couchbase');
 var index       = require('./modules/routes/index');
-var static      = require('./modules/routes/static');
 var uploads     = require('./modules/routes/uploads');
 
 require('./modules/auth/passport');
@@ -44,7 +43,6 @@ app.use(function(req, res, next) {
         });
 
 app.use('/', index);
-app.use('/static', static);
 app.use('/uploads', uploads);
 
 // catch 404 and forward to error handler

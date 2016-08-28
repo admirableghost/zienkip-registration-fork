@@ -27,7 +27,7 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu" ng-repeat="menu in menus">
-                  <li><a ng-click="menuClick(this)"><i class="{{menu.class}}"></i> {{menu.name}} <span class="fa fa-chevron-down pull-right"></span><span class="label label-success pull-right">{{menu.label}}</span></a>
+                  <li><a ng-click="menuClick(this)"><i class="{{menu.icon}}"></i> {{menu.name}} <span class="fa fa-chevron-down pull-right"></span><span class="label label-success pull-right">{{menu.label}}</span></a>
                     <ul class="nav child_menu">
                       <li ng-repeat="submenu in menu.submenu" ><a href="" ng-click="menuClick('{{submenu.state}}')"> {{submenu.name}} </a><span class="label label-success pull-right">{{submenu.label}}</span></li>
                     </ul>

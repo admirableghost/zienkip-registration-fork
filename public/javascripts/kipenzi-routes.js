@@ -44,17 +44,27 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         //--------------------------------- For testing a static page - Avvai - 21_Aug_2016
         // * This block needs to be removed after testing
         
-        .state('staticPage_ProfileManagement', {
-            url:'/staticPage',
-            templateUrl:"../views/menu/Profile_Management.html",
-            controller:'profile_management_controller'
-        }) 
-        
-        .state('staticPage_Appointments', {
-            url:'/staticPage',
-            templateUrl:"../views/menu/Appointments_Page.html",
-            controller:'appointment_controller'
-        }) 
+//        .state('menu.staticPage_ProfileManagement', {
+////            url:'/staticPage',
+////            templateUrl:"../views/menu/Profile_Management.html",
+////            controller:'profile_management_controller'
+//            url:'/ProfileManagement_Step1',
+//            templateUrl:"../views/menu/Profile_Management_1.html",
+//            controller: 'profile_management_controller'
+//        }) 
+//        
+//        .state('staticPage_Appointments', {
+//            url:'/staticPage',
+//            templateUrl:"../views/menu/Appointments_Page.html",
+//            controller:'appointment_controller'
+//        }) 
+    
+         .state('menu.profilemanagement', {
+            abstract : true,
+            url:'/ProfileManagement_Main',
+            templateUrl:"../views/menu/Profile_Management_Main.html",
+            controller: 'profile_management_controller'
+        })
         //----------------------------------
 
         $urlRouterProvider.otherwise('/login');
