@@ -41,6 +41,12 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'homeController'
         })
     
+        .state('menu.appointment-history', {
+            url:'/appointmenthistory',
+            templateUrl:"../views/menu/Appointment_History.html",
+            controller: 'appointment_history_controller'
+        })
+    
         //--------------------------------- For testing a static page - Avvai - 21_Aug_2016
         // * This block needs to be removed after testing
         
