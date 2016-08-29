@@ -19,9 +19,9 @@
 
 ## Naming convention
 --------------------
-1. html : <type>-<group>-<subgroup>-<name1_name2> : eg :- menu-appointment-register_user.html
-2. js   : <type>-<group>-<subgroup>-<name1_name2> : eg :- menu-appointment-register_user.js
-3. module   : <type>-<name> : eg : zienkip-main
+1. html : type-group-subgroup-name1_name2 : eg :- menu-appointment-register_user.html
+2. js   : type-group-subgroup-name1_name2 : eg :- menu-appointment-register_user.js
+3. module   : type-name : eg : zienkip-main
 4. controller / factory / service etc. : camelCase : eg : zienkipController
 
 ## Dev comments
