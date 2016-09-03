@@ -1,158 +1,65 @@
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Profile Mangement page 4 - partial -->
 
-    <title>Doctor Management</title>
-
-   <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../../vendors/jquery/dist/jquery.min.js"></script>
-    <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
-   
     <script>
-      $(document).ready(function() {
+        $(document).ready(function() {
         $('#wizard').smartWizard();
 
         $('#wizard_verticle').smartWizard({
-          transitionEffect: 'slide'
+            transitionEffect: 'slide'
         });
 
         $('.buttonNext').addClass('btn btn-success');
         $('.buttonPrevious').addClass('btn btn-primary');
         $('.buttonFinish').addClass('btn btn-default');
-      });
+        });
     </script>
-  </head>
-  <body class="nav-md" ng-app="menu-profile_management" ng-controller="profile_management_controller">
-    <!-- <div class="container body">
-      <div class="main_container">-->
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Doctor Profiles Management</h3>
-              </div>
-                
+
+      <div id="step-44">
+        <h2 class="StepTitle">Step 4</h2>
+        <form class="form-horizontal form-label-left">
+        <span class="section">Qualifications</span>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="experience">Experience 
+            </label>
+            <div class="col-md-1 col-sm-1 col-xs-2">
+              <input type="text" id="experience" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Value" >
             </div>
-            <div class="clearfix"></div>
-
-            <div class="row">
-
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                 <!-- <div class="x_title">
-                    <h2>Add Doctor</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>-->
-                  <div class="x_content"> 
-                        
-                    <div class="clearfix"></div>
-                    <!-- Smart Wizard -->
-                    
-               <h2>Add new profile</h2>
-                    <!-- Tabs -->
-                    <div id="wizard_verticle" class="form_wizard wizard_verticle">
-                      <ul class="list-unstyled wizard_steps">
-                        <li>
-                          <a href="#step-11">
-                            <span class="step_no">1</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#step-22">
-                            <span class="step_no">2</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#step-33">
-                            <span class="step_no">3</span>
-                          </a>
-                        </li>
-                          <li>
-                          <a href="#step-44">
-                            <span class="step_no">4</span>
-                          </a>
-                        </li>
-                      </ul>
-                      <div id="step-44">
-                        <h2 class="StepTitle">Step 4</h2>
-                        <form class="form-horizontal form-label-left">
-                        <span class="section">Qualifications</span>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="experience">Experience 
-                            </label>
-                            <div class="col-md-1 col-sm-1 col-xs-2">
-                              <input type="text" id="experience" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Value" >
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-4">
-                              <select id="working-to" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Duration" >
-                                <option value="months">months</option> 
-                                <option value="years">years</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="specializations">Specialization 
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="specializations" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Specialization" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="qualification">Qualifications
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" id="qualification" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Qualifications" >
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id-proof">ID Proof
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <!--<input type="text" id="id-proof" required="required" class="form-control col-md-7 col-xs-12">-->
-                              <button class="btn" type="button">Upload Image</button>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="self-description">Self description 
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                             <!-- <input type="text" id="self-description" required="required" class="form-control col-md-7 col-xs-12"> -->
-                            <textarea id="self-description" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_SelfDescription" ></textarea>
-                            </div>  
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    <!-- End SmartWizard Content -->
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+              <select id="working-to" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Duration" >
+                <option value="months">months</option> 
+                <option value="years">years</option>
+              </select>
             </div>
           </div>
-        </div>
-        <!-- /page content -->
-    <!--    </div>
-    </div>-->
-  </body>
-</html>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="specializations">Specialization 
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="specializations" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Specialization" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="qualification">Qualifications
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="qualification" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Qualifications" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id-proof">ID Proof
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <!--<input type="text" id="id-proof" required="required" class="form-control col-md-7 col-xs-12">-->
+              <button class="btn" type="button">Upload Image</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="self-description">Self description 
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+             <!-- <input type="text" id="self-description" required="required" class="form-control col-md-7 col-xs-12"> -->
+            <textarea id="self-description" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_SelfDescription" ></textarea>
+            </div>  
+          </div>
+        </form>
+      </div>              

@@ -1,5 +1,11 @@
-var app = angular.module('menu-appointment_history', []);
+// Module for Appointment History
 
-app.service('appointment_history_service',function(){
+var app = angular.module('menu-appointment-history', []);
+
+app.service('appointmentHistoryService',function(){
     this.appointmentList = null;
+});
+
+app.controller('appointmentHistoryController', function($scope, $http, $state) {
+    
 });
