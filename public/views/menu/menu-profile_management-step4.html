@@ -1,0 +1,65 @@
+    <!-- Profile Mangement page 4 - partial -->
+
+    <script>
+        $(document).ready(function() {
+        $('#wizard').smartWizard();
+
+        $('#wizard_verticle').smartWizard({
+            transitionEffect: 'slide'
+        });
+
+        $('.buttonNext').addClass('btn btn-success');
+        $('.buttonPrevious').addClass('btn btn-primary');
+        $('.buttonFinish').addClass('btn btn-default');
+        });
+    </script>
+
+      <div id="step-44">
+        <h2 class="StepTitle">Step 4</h2>
+        <form class="form-horizontal form-label-left">
+        <span class="section">Qualifications</span>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="experience">Experience 
+            </label>
+            <div class="col-md-1 col-sm-1 col-xs-2">
+              <input type="text" id="experience" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Value" >
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+              <select id="working-to" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Experience_Duration" >
+                <option value="months">months</option> 
+                <option value="years">years</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="specializations">Specialization 
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="specializations" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Specialization" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="qualification">Qualifications
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="qualification" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Qualifications" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id-proof">ID Proof
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <!--<input type="text" id="id-proof" required="required" class="form-control col-md-7 col-xs-12">-->
+              <button class="btn" type="button">Upload Image</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="self-description">Self description 
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+             <!-- <input type="text" id="self-description" required="required" class="form-control col-md-7 col-xs-12"> -->
+            <textarea id="self-description" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_SelfDescription" ></textarea>
+            </div>  
+          </div>
+        </form>
+      </div>              

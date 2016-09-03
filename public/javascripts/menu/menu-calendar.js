@@ -1,11 +1,12 @@
+// Module for Calendar
+
 var app = angular.module('menu-calendar', []);
 
-app.service('calendar_service',function(){
+app.service('calendarService',function(){
     this.eventList = null;
 });
 
-// Menu - Calendar
-app.controller('calendar_controller', function($scope, $http, $state) {
+app.controller('calendarController', function($scope, $http, $state) {
     $scope.gotoStep1 = function() {
         $state.go('profilestep1');
     }

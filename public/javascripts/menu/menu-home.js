@@ -1,3 +1,5 @@
+// Module for ???
+
 var app = angular.module('menu-home', []);
 
 app.controller('homeController', function($scope, $rootScope, $http, $state) {

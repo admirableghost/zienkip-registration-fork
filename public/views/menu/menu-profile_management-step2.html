@@ -1,0 +1,74 @@
+    <!-- Profile Mangement page 2 - partial -->
+    
+    <script>
+        $(document).ready(function() {
+        $('#wizard').smartWizard();
+
+        $('#wizard_verticle').smartWizard({
+            transitionEffect: 'slide'
+        });
+
+        $('.buttonNext').addClass('btn btn-success');
+        $('.buttonPrevious').addClass('btn btn-primary');
+        $('.buttonFinish').addClass('btn btn-default');
+        });
+    </script>
+
+      <div id="step-22">
+        <h2 class="StepTitle">Step 2</h2>
+        <form class="form-horizontal form-label-left">
+        <span class="section">Official Information</span>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="clinic-name">Clinic Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="clinic-name" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_ClinicName" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="working-hours">Working hours <span class="required">*</span>
+            </label>
+            <label class="control-label col-md-1 col-sm-1 col-xs-4" for="working-from">From <span class="required">*</span>
+            </label>
+            <div class="col-md-2 col-sm-2 col-xs-8">
+              <select id="working-from" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_Clinic_FromTime" >
+                <option value="6am">6am</option>
+                <option value="7am">7am</option>
+                <option value="8am">8am</option>
+                <option value="9am">9am</option>
+                <option value="10am">10am</option>
+                <option value="11am">11am</option>
+                <option value="12am">12am</option>
+              </select>
+            </div>
+            <label class="control-label col-md-1 col-sm-1 col-xs-4" for="working-to">To <span class="required">*</span>
+            </label>
+            <div class="col-md-2 col-sm-2 col-xs-8">
+              <select id="working-to" class="form-control col-md-7 col-xs-12" contenteditable="false" ng-model="profile_management_controller_Clinic_ToTime" >
+                <option value="5pm">5pm</option> 
+                <option value="6pm">6pm</option>
+                <option value="7pm">7pm</option>
+                <option value="8pm">8pm</option>
+                <option value="9pm">9pm</option>
+                <option value="10pm">10pm</option>
+                <option value="11pm">11pm</option>
+                <option value="12pm">12pm</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="consult-duration">Average Consultation Duration
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="consult-duration" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_AvgConsultDuration" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="consult-fees">Consultation Fees <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="consult-fees" required="required" class="form-control col-md-7 col-xs-12" ng-model="profile_management_controller_ConsultationFees" >
+            </div>
+          </div>
+        </form>
+      </div>

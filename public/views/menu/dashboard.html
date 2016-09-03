@@ -1,3 +1,4 @@
+    <!-- Application Home page -->
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -29,7 +30,7 @@
                 <ul class="nav side-menu" ng-repeat="menu in menus">
                   <li><a ng-click="menuClick(this)"><i class="{{menu.icon}}"></i> {{menu.name}} <span class="fa fa-chevron-down pull-right"></span><span class="label label-success pull-right">{{menu.label}}</span></a>
                     <ul class="nav child_menu">
-                      <li ng-repeat="submenu in menu.submenu" ><a href="" ng-click="menuClick('{{submenu.state}}')"> {{submenu.name}} </a><span class="label label-success pull-right">{{submenu.label}}</span></li>
+                      <li ng-repeat="submenu in menu.submenu" ><a href="" ng-click="menuClick(this)"> {{submenu.name}} </a><span class="label label-success pull-right">{{submenu.label}}</span></li>
                     </ul>
                   </li>
                 </ul>

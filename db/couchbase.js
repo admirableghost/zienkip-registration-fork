@@ -23,6 +23,7 @@ Database.start = function () {
     
     for (bucket in buckets) {
         console.log("opened bucket - " + buckets[bucket]._name);
+        bucket.operationTimeout = 120 * 1000;
     }
     console.log("connected to couch db"); 
 };
