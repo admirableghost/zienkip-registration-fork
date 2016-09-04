@@ -3,6 +3,7 @@ var nJwt        = require('njwt');
 var secureRandom    = require('secure-random');
 var expressjwt  = require('express-jwt');
 var fs          = require('fs');
+var uuid        = require('uuid');
 
 var config      = require('../../config');
 
@@ -15,7 +16,8 @@ var signingKey = secureRandom(256, {
 
 var auth = expressjwt({
 //    algorithm: config.security.jwt_algo,
-    secret: signingKey
+//    secret: signingKey
+    secret: 'secret'
 });
 
 
@@ -39,12 +41,14 @@ userSchema.prototype.generateJwt = function  (user) {
     expiry.setDate(expiry.getDate() + 7);
 
     var claims = {
-        iss: config.url, // The URL of your service
-        sub: user.uuid, // The UID of the user in your system
+        iss: config.url, // issuer
+        sub: user.uuid, // subject
         role: user.role,
         type: user.type,
         menus: user.menus,
-        exp: parseInt(expiry.getTime() / 1000)
+        exp: parseInt(expiry.getTime() / 1000) //expiry
+//        jti: uuid.v4(), // jwt id
+//        iat: expiry // issued at
     }
 
     var jwt = nJwt.create(claims, signingKey); //, config.security.jwt_algo);

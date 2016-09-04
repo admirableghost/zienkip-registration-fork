@@ -21,11 +21,6 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, us
                 }
 
             }).then(function(response) {
-//                var payload = JSON.parse(window.atob(response.data.token.split(".")[1]));
-//                
-//                userService.token = response.data.token;
-//                userService.sub = payload.sub;
-//                userService.menus = payload.menus;
                 
                 kipenziFactory.loadUserService(userService, response.data.token);
                 
@@ -33,7 +28,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, us
                 
                 $state.go('menu.home');
             }, function(response, error) {
-                console.log("Error message " + response + ' :::::: ' +error);
+                alert(error);
             });
 
         }

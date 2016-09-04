@@ -17,9 +17,11 @@ module.exports = Database;
 Database.start = function () {
     console.log("connecting to couch db"); 
     
-    var couchCluster = new couchbase.Cluster(config.couchbase.server);
-    buckets.profiles = couchCluster.openBucket(config.couchbase.buckets.profiles);
-    buckets.global_static = couchCluster.openBucket(config.couchbase.buckets.global_static);
+    var couchCluster    = new couchbase.Cluster(config.couchbase.server);
+    
+    buckets.profiles                = couchCluster.openBucket(config.couchbase.buckets.profiles);
+    buckets.global_static           = couchCluster.openBucket(config.couchbase.buckets.global_static);
+    buckets.relational_transactions = couchCluster.openBucket(config.couchbase.buckets.relational_transactions);
     
     for (bucket in buckets) {
         console.log("opened bucket - " + buckets[bucket]._name);

@@ -3,7 +3,8 @@ var app         = express.Router();
 var path        = require('path');
 var passport    = require('passport');
 
-var loginUtil   = require('../auth/authentication');
+var appReg      = require('../appointment/appointment-registration');
+var authUtil    = require('../auth/authentication');
 var userSchema  = require('../auth/user');
 var utils       = require('../utils/utils');
 
@@ -15,62 +16,18 @@ app.get('/', function (req, res) {
     });
 });
 
-app.post('/login', loginUtil.authenticateLogin);
+app.post('/login', authUtil.authenticateLogin);
 
-//app.all('/*', loginUtil.routingAuth, function(req, res, next){
+//app.all('/*', authUtil.routingAuth, function(req, res, next){
 //    console.log('General Validations');
 //    next();
 //});
-//
-//app.get('/', function (req, res, next) {
-//    passport.authenticate('local', function(err, user, info) {
-//        if (err) {
-//            console.log(err);
-//            return res.redirect('/login'); 
-//        }
-//        if (!user) {
-//            return res.redirect('/login'); 
-//        }
-//        res.sendFile('index.html', {
-//            root: path.join(__dirname, '../../template/production')
-//        });
-//        res.json({
-//            "token": obj.generateJwt()
-//        });
-//    })(req, res, next);
-//});
-//
-//app.post('/api/getUserName', routingAuth, function (req, res) {
-//    console.log('Logged in success and access granted to resource')
-//    res.send('sucess Authed flow -- Ashwin');
-//
-//});
-//
-//app.post('/authenticate', function (req, res) {
-//
-//    passport.authenticate('local', function (err, user, info) {
-//        var token;
-//
-//        console.log("Facebook Auth " + req.body.facebooktoken);
-//        console.log('main.js' + err + user);
-//        // If Passport throws/catches an error
-//        if (err) {
-//            res.status(404).json("eror passport");
-//            return;
-//        }
-//
-//        // If a user is found
-//        if (user) {
-//            var obj = new userSchema();
-//
-//            res.status(200);
-//            res.json({
-//                "token": obj.generateJwt()
-//            });
-//        } else {
-//            // If user is not found
-//            res.status(401).json(info);
-//        }
-//    })(req, res);
-//
-//});
+
+
+app.post('/api/appointment', /*authUtil.routingAuth,*/ function(req, res, next){
+    appReg.createAppointment(req.body.appointment, function(status, appointment) {
+        res.status(status);
+        res.json(appointment);
+    });
+    
+});

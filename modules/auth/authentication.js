@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 var q           = require('q');
 var console     = require('console');
@@ -16,6 +16,10 @@ function LoginUtil() {};
 
 module.exports = LoginUtil;
 
+// Logs the user in
+// 1. checks if the creds are valid
+// 2. gets the profile uuid and gets user details
+// 3. loads the menus
 LoginUtil.login = function (username, password, done) {
     
     logger.info("login", "general",  "user : " + username);
@@ -23,20 +27,20 @@ LoginUtil.login = function (username, password, done) {
     var pwd = utils.generateHash(password);
     var user;
     
-    db.query(config.couchbase.buckets.profiles, queries.cred_check, [username, pwd])
+    db.query(config.couchbase.buckets.profiles, queries.user.cred_check, [username, pwd])
         .then(function (result) {
             if (!utils.isEmpty(result[0])) {
                 //valid user
                 logger.info("login", "general",  "validating user : " + username + " : " + result[0][0].uuid);
                 
-                db.query(config.couchbase.buckets.profiles, queries.uuid_login, [result[0][0].uuid])
+                db.query(config.couchbase.buckets.profiles, queries.user.get_user_using_uuid, [result[0][0].uuid])
                     .then(function (result) {
                         if (!utils.isEmpty(result[0])) {
                             // valid uuid 
                             logger.info("login", "general",  "valid user : " + username);
                             user = result[0][0];
                             
-                            db.query(config.couchbase.buckets.global_static, queries.getMenus, [user.type, user.role])
+                            db.query(config.couchbase.buckets.global_static, queries.menu.getMenus, [config.app_db_key, "menu", user.type, user.role])
                                 .then(function (result) {
                                     if (!utils.isEmpty(result[0])) {
                                         //load menus
@@ -45,12 +49,12 @@ LoginUtil.login = function (username, password, done) {
                                         return done(null, user);
                                     } else {
                                         logger.warn("login", "general",  "Unable to load menus for user :" + username);
-                                        return done(null, false, {message: message.login.contact_support});
+                                        return done(null, false, {message: message.support.contact_support});
                                     }
                                 }, function (error) {
                                     //db error
                                     logger.error("login", "DB",  username + ' : ' + error);
-                                    return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
+                                    return done(null, false, {status: false, type: 'db', message: message.support.contact_support});
                                 });
                             
                         } else {
@@ -60,7 +64,7 @@ LoginUtil.login = function (username, password, done) {
                     }, function (error) {
                         //db error
                         logger.error("login", "DB",  username + ' : ' + error);
-                        return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
+                        return done(null, false, {status: false, type: 'db', message: message.support.contact_support});
                     });
                 
             } else {
@@ -70,14 +74,15 @@ LoginUtil.login = function (username, password, done) {
         }, function (error) {
             //db error
             logger.error("login", "DB",  username + ' : ' + error);
-            return done(null, false, {status: false, type: 'db', message: message.login.contact_support});
+            return done(null, false, {status: false, type: 'db', message: message.support.contact_support});
         }).catch(function (error) {
             //q error
             logger.error("login", "q",  username + ' : ' + error.stack);
-            return done(null, false, {status: false, type: 'q', message: message.login.contact_support});
+            return done(null, false, {status: false, type: 'q', message: message.support.contact_support});
         });
 };
 
+// local authentication
 LoginUtil.authenticateLogin = function (req, res) {
     passport.authenticate('local', function (err, user, info) {
         

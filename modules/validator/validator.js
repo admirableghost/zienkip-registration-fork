@@ -69,3 +69,12 @@ Validator.validateMobileNumber = function (mobile) {
     var re = /^\d{9,10}$/;
     return re.test(mobile);
 };
+
+Validator.validateAppointmentRegistration = function(appointment) {
+    var isValid = true;
+    var error = {};
+    
+    
+    
+    return {isValid: isValid, error: error}; 
+};
