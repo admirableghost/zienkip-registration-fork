@@ -25,8 +25,8 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('menu', {
 //            url:'/',
             templateUrl:"../views/menu/dashboard.html",
-            controller: 'dashboardController'
-            
+            controller: 'dashboardController',
+            abstract: true
         })
     
         .state('menu.home', {
@@ -35,35 +35,17 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'homeController'
         })
         
-        .state('menu.appointment', {
-            url:'/appointment',
-            templateUrl:"../views/menu/menu-appointment.html",
-            controller: 'homeController'
+        .state('menu.appointment-register', {
+            url:'/appointment-register',
+            templateUrl:"../views/menu/menu-appointment-register.html",
+            controller: 'appointmentController'
         })
     
         .state('menu.appointment-history', {
-            url:'/appointmenthistory',
-            templateUrl:"../views/menu/Appointment_History.html",
-            controller: 'appointment_history_controller'
+            url:'/appointment-history',
+            templateUrl:"../views/menu/menu-appointment-register.html",
+            controller: 'homeController'
         })
-    
-        //--------------------------------- For testing a static page - Avvai - 21_Aug_2016
-        // * This block needs to be removed after testing
-        
-//        .state('menu.staticPage_ProfileManagement', {
-////            url:'/staticPage',
-////            templateUrl:"../views/menu/Profile_Management.html",
-////            controller:'profile_management_controller'
-//            url:'/ProfileManagement_Step1',
-//            templateUrl:"../views/menu/Profile_Management_1.html",
-//            controller: 'profile_management_controller'
-//        }) 
-//        
-//        .state('staticPage_Appointments', {
-//            url:'/staticPage',
-//            templateUrl:"../views/menu/Appointments_Page.html",
-//            controller:'appointment_controller'
-//        }) 
     
          .state('menu.profilemanagement', {
             abstract : true,
