@@ -23,7 +23,6 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         /* Menus  */
     
         .state('menu', {
-//            url:'/',
             templateUrl:"../views/menu/dashboard.html",
             controller: 'dashboardController',
             abstract: true
