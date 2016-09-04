@@ -11,25 +11,25 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('menu.profile_management.step1', {
             url:'/ProfileManagement_Step1',
             templateUrl:"../../views/menu/menu-profile_management-step1.html",
-            controller: 'profile_management_controller'
+            controller: 'profileManagementController'
         }) 
     
         .state('menu.profile_management.step2', {
             url:'/ProfileManagement_Step2',
             templateUrl:"../../views/menu/menu-profile_management-step2.html",
-            controller: 'profile_management_controller'
+            controller: 'profileManagementController'
         }) 
     
         .state('menu.profile_management.step3', {
             url:'/ProfileManagement_Step3',
             templateUrl:"../../views/menu/menu-profile_management-step3.html",
-            controller: 'calendar_controller'
+            controller: 'calendarController'
         }) 
 
         .state('menu.profile_management.step4', {
             url:'/ProfileManagement_Step4',
             templateUrl:"../../views/menu/menu-profile_management-step4.html",
-            controller: 'profile_management_controller'
+            controller: 'profileManagementController'
         }) 
             
 });
@@ -59,21 +59,21 @@ app.controller('profileManagementController', function($scope, $http, $state) {
     $scope.profile_management_controller_Qualifications = "MD";
     $scope.profile_management_controller_SelfDescription = "Professional with established reputation";
     
-    $scope.gotoStep1 = function() {
-        $state.go('menu.profile_management.step1');
-    }
-    
-    $scope.gotoStep2 = function() {
-        $state.go('menu.profile_management.step2');
-    }
-    
-    $scope.gotoStep3 = function() {
-        $state.go('menu.profile_management.step3');
-    }
-    
-    $scope.gotoStep4 = function() {
-        $state.go('menu.profile_management.step4');
-    }
+//    $scope.gotoStep1 = function() {
+//        $state.go('menu.profile_management.step1');
+//    }
+//    
+//    $scope.gotoStep2 = function() {
+//        $state.go('menu.profile_management.step2');
+//    }
+//    
+//    $scope.gotoStep3 = function() {
+//        $state.go('menu.profile_management.step3');
+//    }
+//    
+//    $scope.gotoStep4 = function() {
+//        $state.go('menu.profile_management.step4');
+//    }
     
 });
 

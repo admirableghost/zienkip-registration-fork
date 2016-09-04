@@ -37,20 +37,26 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('menu.appointment-register', {
             url:'/appointment-register',
             templateUrl:"../views/menu/menu-appointment-register.html",
-            controller: 'appointmentController'
+            controller: 'appointmentRegisterController'
         })
     
         .state('menu.appointment-history', {
             url:'/appointment-history',
-            templateUrl:"../views/menu/menu-appointment-register.html",
-            controller: 'homeController'
+            templateUrl:"../views/menu/menu-appointment-history.html",
+            controller: 'appointmentHistoryController'
         })
     
-         .state('menu.profilemanagement', {
+         .state('menu.profile_management', {
             abstract : true,
             url:'/ProfileManagement_Main',
-            templateUrl:"../views/menu/Profile_Management_Main.html",
-            controller: 'profile_management_controller'
+            templateUrl:"../views/menu/menu-profile_management-main.html",
+            controller: 'profileManagementController'
+        })
+    
+        .state('menu.calendar', {
+            url:'/Calendar',
+            templateUrl:"../views/menu/menu-calendar.html",
+            controller: 'calendarController'
         })
         //----------------------------------
 
