@@ -40,7 +40,7 @@ LoginUtil.login = function (username, password, done) {
                             logger.info("login", "general",  "valid user : " + username);
                             user = result[0][0];
                             
-                            db.query(config.couchbase.buckets.global_static, queries.menu.getMenus, [config.app_db_key, "menu", user.type, user.role])
+                            db.query(config.couchbase.buckets.global_static, queries.menu.get_menus, [config.app_db_key, "menu", user.type, user.role])
                                 .then(function (result) {
                                     if (!utils.isEmpty(result[0])) {
                                         //load menus

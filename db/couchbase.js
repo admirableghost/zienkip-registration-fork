@@ -7,6 +7,7 @@ var uuid        = require('uuid');
 var q           = require('q');
 
 var config  = require('../config');
+var utils   = require('../utils/utils');
 
 function Database() {};
 var buckets = {};
@@ -25,7 +26,7 @@ Database.start = function () {
     
     for (bucket in buckets) {
         console.log("opened bucket - " + buckets[bucket]._name);
-        bucket.operationTimeout = 120 * 1000;
+        buckets[bucket].operationTimeout = 120 * 1000;
     }
     console.log("connected to couch db"); 
 };
@@ -68,8 +69,55 @@ Database.remove = function(bucket, key, callback) {
     
 };
 
+// inserts multiple documents at once
+Database.bulkInsertTransaction = function(bucket, documentJson, callback) {
+    
+    console.log('inserting ' + JSON.stringify(documentJson));
+    
+    bulkInsertTransactionWorker(bucket, documentJson, {}, {}, function (error, result) {
+        
+        if(error) {
+            // delete all the records which are already inserted in the transaction
+            for(var key in result) {
+                Database.remove(bucket, key, function (error, result) {
+                    if(error) {
+                        console.log('bulk insert roll back removal failed : ' + error );
+                    }
+                });
+            }
+        }
+        
+        callback(error, result);
+    });
+        
+};
 
-//-----------------------
+var bulkInsertTransactionWorker = function(bucket, documentJson, resultObj, errorObj, callback) {
+    
+    for (var key in documentJson) {
+        Database.insert(bucket, key, documentJson[key], function (error, result) {
+            if(error) {
+                console.log('bulk insert failed for key : ' + key + ' in '+ JSON.stringify(documentJson) );
+                return callback(errorObj, resultObj);
+                
+            } else {
+                resultObj[key] = result;    // stacks the results of all the inserts
+                delete documentJson[key];   // removes the successful insert
+                
+                if(utils.isEmpty(documentJson)) {
+                    // when all docs inserted send the final success callback
+                    return callback(null, resultObj);
+                
+                } else {
+                    // recursion to insert the remaining docs
+                    bulkInsertTransactionWorker(bucket, documentJson, resultObj, errorObj, callback);     
+                }
+            }
+        });
+        break;
+    }
+
+}
 
 Database.get = function (bucket, documentId, callback) {
     buckets[bucket].get(documentId, function(error, result) {
@@ -90,6 +138,8 @@ Database.getMulti = function(bucket, documentIdArray, callback) {
         callback(null, {message: "success", data: result});
     });
 };
+
+//-----------------------
 
 Database.upsert = function(bucket, jsonData, callback) {
     var documentId = jsonData.id;

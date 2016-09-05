@@ -3,7 +3,7 @@
     "app_db_key" : "registration",
     "browser_version" : "0.0",
     "couchbase": {
-        "server": "127.0.0.1:8091",
+        "server": "couchbase://127.0.0.1",
         "username": "Administrator",
         "password": "password",
         "buckets": {

@@ -36,12 +36,12 @@ app.factory('sessionInjector', ['userService', function(userService, $rootScope)
         request: function(config) {
             config.headers.Authorization = 'Bearer ' + userService.token;
             return config;
-        },
-       responseError: function (response) {
-           if (response.status === 401) {
-               $rootScope.go('login');
-           }     
-       }
+        }
+//            ,responseError: function (response) {
+//           if (response.status === 401) {
+//               $rootScope.go('login');
+//           }     
+//       }
     };
     return sessionInjector;    
     

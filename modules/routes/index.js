@@ -25,6 +25,7 @@ app.post('/login', authUtil.authenticateLogin);
 
 
 app.post('/api/appointment', /*authUtil.routingAuth,*/ function(req, res, next){
+    
     appReg.createAppointment(req.body.appointment, function(status, appointment) {
         res.status(status);
         res.json(appointment);

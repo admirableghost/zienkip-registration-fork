@@ -44,8 +44,8 @@ app.controller('appointmentRegisterController', function($http, $scope) {
                 alert(response.data.token)
                 $scope.appointment.token = response.data.token;
                 
-            }, function(response, error) {
-                alert(error);
+            }, function(response) {
+                alert(response);
             });
         
     }
