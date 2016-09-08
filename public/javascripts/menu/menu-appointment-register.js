@@ -17,7 +17,7 @@ app.controller('appointmentRegisterController', function($http, $scope) {
     $scope.appointment.user.mobile  = "";
     $scope.appointment.user.gender  = true;
     
-    $scope.appointment.kipenzis     = [{name: "Kip1"}, {name: "Kip2"}, {name: "Kip3"}];
+    $scope.appointment.kipenzis     = [{name: "Kip1"}, {name: "Kip2"}, {name: "Kip3", uuid: "7fc887d1-94ac-463e-9824-d2a803aad530"}];
     
     $scope.appointment.time_slot    = "";
     

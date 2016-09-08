@@ -7,7 +7,8 @@ var uuid        = require('uuid');
 var q           = require('q');
 
 var config  = require('../config');
-var utils   = require('../utils/utils');
+var utils   = require('../modules/utils/utils');
+var logger  = require('../modules/utils/logger');
 
 function Database() {};
 var buckets = {};
@@ -69,36 +70,125 @@ Database.remove = function(bucket, key, callback) {
     
 };
 
+// gets a record
+Database.get = function (bucket, documentId, callback) {
+    buckets[bucket].get(documentId, function(error, result) {
+        if(error) {
+            callback(error, null);
+            return;
+        }
+        callback(null, {message: "success", data: result});
+    });
+};
+
+// gets multiple records
+Database.getMulti = function(bucket, documentIdArray, callback) {
+    buckets[bucket].getMulti(documentIdArray, function(error, result) {
+        if(error) {
+            callback(error, result);
+            return;
+        }
+        callback(null, result);
+    });
+};
+
+// inserts if key doesnt exist else overwrites
+Database.upsert = function(bucket, documentId, value, callback) {
+    buckets[bucket].upsert(documentId, value, function(error, result) {
+        if(error) {
+            callback(error, null);
+            return;
+        }
+        callback(null, {message: "success", data: result});
+    });
+};
+
 // inserts multiple documents at once
-Database.bulkInsertTransaction = function(bucket, documentJson, callback) {
+Database.bulkUpsertTransaction = function(bucket, documentJson, callback) {
     
     console.log('inserting ' + JSON.stringify(documentJson));
     
-    bulkInsertTransactionWorker(bucket, documentJson, {}, {}, function (error, result) {
+    var documentIdArray = [];
+    var documentBackUp;
+    
+    for( var documentId in documentJson) {
+        documentIdArray.push(documentId);
+    }
+    
+    if(!utils.isEmpty(documentIdArray)) {
+    
+        Database.getMulti(bucket, documentIdArray, function (error, result) {
         
-        if(error) {
-            // delete all the records which are already inserted in the transaction
-            for(var key in result) {
-                Database.remove(bucket, key, function (error, result) {
-                    if(error) {
-                        console.log('bulk insert roll back removal failed : ' + error );
-                    }
+            if (result){
+                console.log(JSON.stringify(result));
+                for(var key in result) {
+                    if(result[key].error && result[key].error.code == 13) {
+                        delete result[key].error;
+                    }    
+                }
+                
+                documentBackUp = result;
+                
+                bulkUpsert(bucket, documentJson, result, documentBackUp, function (error, result) {
+                    callback(error, result);
                 });
             }
-        }
-        
-        callback(error, result);
-    });
+        });
+    }
         
 };
 
-var bulkInsertTransactionWorker = function(bucket, documentJson, resultObj, errorObj, callback) {
+var bulkUpsert = function(bucket, documentJson, existingDoc, documentBackUp, callback) {
+            
+            // iterate over the document and update the result set
+            for( var documentKey in existingDoc) {
+                // set all the attribs of the 
+                var document    = documentJson[documentKey];
+                var resultDoc   = existingDoc[documentKey].value;
+                
+                if(resultDoc) {
+                    for (var attrib in document) {
+                        resultDoc[attrib] =  document[attrib];   
+                    }
+                    documentJson[documentKey] = resultDoc;
+                }
+            }
+            
+            // upsert all the records now
+            bulkUpsertTransactionWorker(bucket, documentJson, {}, {}, function (error, result) {
+        
+                if(error) {
+                    // delete all the records which are already inserted in the transaction
+                    for(var key in result && !documentBackUp[key]) {
+                        Database.remove(bucket, key, function (error, result) {
+                            if(error) {
+                                console.log('bulk insert roll back removal failed : ' + error );
+                            }
+                        });
+                    }
+                    for(var key in documentBackUp) {
+                        Database.upsert(bucket, key, documentBackUp[key], function (error, result) {
+                            if(error) {
+                                console.log('bulk insert roll back removal failed : ' + error );
+                            }
+                        });
+                    }
+                }
+        
+                callback(error, result);
+            });
+            
+            
+        
+}
+
+var bulkUpsertTransactionWorker = function(bucket, documentJson, resultObj, errorObj, callback) {
     
     for (var key in documentJson) {
-        Database.insert(bucket, key, documentJson[key], function (error, result) {
+        Database.upsert(bucket, key, documentJson[key], function (error, result) {
             if(error) {
-                console.log('bulk insert failed for key : ' + key + ' in '+ JSON.stringify(documentJson) );
-                return callback(errorObj, resultObj);
+                    console.log('bulk insert failed for key : ' + key + ' in '+ JSON.stringify(documentJson) );
+                    return callback(errorObj, resultObj);
                 
             } else {
                 resultObj[key] = result;    // stacks the results of all the inserts
@@ -110,7 +200,7 @@ var bulkInsertTransactionWorker = function(bucket, documentJson, resultObj, erro
                 
                 } else {
                     // recursion to insert the remaining docs
-                    bulkInsertTransactionWorker(bucket, documentJson, resultObj, errorObj, callback);     
+                    bulkUpsertTransactionWorker(bucket, documentJson, resultObj, errorObj, callback);     
                 }
             }
         });
@@ -118,58 +208,3 @@ var bulkInsertTransactionWorker = function(bucket, documentJson, resultObj, erro
     }
 
 }
-
-Database.get = function (bucket, documentId, callback) {
-    buckets[bucket].get(documentId, function(error, result) {
-        if(error) {
-            callback(error, null);
-            return;
-        }
-        callback(null, {message: "success", data: result});
-    });
-};
-
-Database.getMulti = function(bucket, documentIdArray, callback) {
-    buckets[bucket].getMulti(documentIdArray, function(error, result) {
-        if(error) {
-            callback(error, {message: "failure", data: result});
-            return;
-        }
-        callback(null, {message: "success", data: result});
-    });
-};
-
-//-----------------------
-
-Database.upsert = function(bucket, jsonData, callback) {
-    var documentId = jsonData.id;
-    if(documentId) {
-        upsert(bucket, documentId, jsonData, callback);
-    } else {
-        buckets[bucket].counter(jsonData.type, 1, {initial:1}, function(err, res) {
-        if (err) {
-            callback(err, null);
-            return;
-        }
-        documentId = jsonData.type+'_'+res.value;
-        jsonData.id = documentId;
-        upsert(bucket, documentId, jsonData, function(error, result) {
-            if(error) {
-                callback(error, null);
-                return;
-            }
-            callback(null, {message: "success", data: result});
-            });
-        });
-    }
-};
-
-var upsert = function(bucket, documentId, value, callback) {
-    buckets[bucket].upsert(documentId, value, function(error, result) {
-        if(error) {
-            callback(error, null);
-            return;
-        }
-        callback(null, {message: "success", data: result});
-    });
-};
