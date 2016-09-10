@@ -3,6 +3,7 @@
 var forge   = require('node-forge');
 var Cookies = require('cookies');
 var Buffer  = require('buffer/').Buffer;
+var uuid    = require('uuid')
 
 var config  = require('../../config');
 
@@ -52,13 +53,6 @@ Utils.decode = function (value, format) {
     return decodedVal;
 };
 
-// generate token
-Utils.generateToken = function () {
-    return (new Date().getTime()).toString(36);
-};
-
-//----------------------
-
 // generate session
 Utils.addCookies = function (req, res, cookieContents) {
     var cookies = new Cookies( req, res, { "keys": config.hash_key } );
@@ -95,3 +89,12 @@ Utils.encodeCookie = function (value) {
 Utils.decodeCookie = function (value) {
     return this.decode(this.decode(value, config.encoding.hex), config.encoding.base64);
 };
+
+// generate token
+Utils.generateToken = function () {
+    return (new Date().getTime()).toString(36);
+};
+
+Utils.generateUUID = function () {
+    return uuid.v4();
+}

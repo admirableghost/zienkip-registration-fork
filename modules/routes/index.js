@@ -32,3 +32,16 @@ app.post('/api/appointment', /*authUtil.routingAuth,*/ function(req, res, next){
     });
     
 });
+
+app.post('/api/getUserAndPetDetails', /*authUtil.routingAuth,*/ function(req, res, next){
+    
+    console.log(JSON.stringify(req.body));
+    
+    appReg.getUserAndPetDetails(req.body.appointment.user.mobile, function(user, error){
+        if(error) {
+            res.json(error);
+        }
+        res.json(user);
+    });
+    
+});

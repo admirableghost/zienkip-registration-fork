@@ -9,16 +9,9 @@ app.controller('appointmentRegisterController', function($http, $scope) {
     
     $scope.appointment  = {};
     
-    $scope.appointment.token = "";
-    
-    $scope.appointment.user = {};
-    $scope.appointment.user.fname   = "";
-    $scope.appointment.user.lname   = "";
-    $scope.appointment.user.mobile  = "";
-    $scope.appointment.user.gender  = true;
-    
-    $scope.appointment.kipenzis     = [{name: "Kip1"}, {name: "Kip2"}, {name: "Kip3", uuid: "7fc887d1-94ac-463e-9824-d2a803aad530"}];
-    
+    $scope.appointment.token        = "";
+    $scope.appointment.user         = new userVO();
+    $scope.appointment.kipenzis     = [];
     $scope.appointment.time_slot    = "";
     
     $scope.selected_kipenzi = $scope.appointment.kipenzis[0];
@@ -27,8 +20,28 @@ app.controller('appointmentRegisterController', function($http, $scope) {
         $scope.selected_kipenzi = $scope.appointment.kipenzis[caller.$index];
     }
     
+    $scope.addKipenzi = function() {
+        $scope.appointment.kipenzis.push(new kipenziVO());
+        $scope.selected_kipenzi = $scope.appointment.kipenzis[$scope.appointment.kipenzis.length-1];
+    }
+    
     $scope.checkMobile = function() {
-        alert($scope.appointment.user.fname + " : " + $scope.appointment.user.lname  + " : " + $scope.appointment.user.mobile  + " : " + $scope.appointment.user.gender);
+        $http({
+                method: "POST",
+                url: window.location.origin + "/api/getUserAndPetDetails",
+                data: {
+                    appointment: $scope.appointment
+                }
+
+            }).then(function(response) {
+                $scope.appointment.user     = response.data.user        || new userVO();
+                $scope.appointment.kipenzis = response.data.kipenzis    || [];
+                $scope.selected_kipenzi     = $scope.appointment.kipenzis[0];
+                
+            }, function(response) {
+                alert(response);
+            });
+        
     }
     
     $scope.bookAppointment = function() {

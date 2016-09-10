@@ -12,15 +12,15 @@ var userSchema  = require('../auth/user');
 var logger      = require('../utils/logger');
 var utils       = require('../utils/utils');
 
-function LoginUtil() {};
+function AuthUtil() {};
 
-module.exports = LoginUtil;
+module.exports = AuthUtil;
 
 // Logs the user in
 // 1. checks if the creds are valid
 // 2. gets the profile uuid and gets user details
 // 3. loads the menus
-LoginUtil.login = function (username, password, done) {
+AuthUtil.login = function (username, password, done) {
     
     logger.info("login", "general",  "user : " + username);
     
@@ -83,7 +83,7 @@ LoginUtil.login = function (username, password, done) {
 };
 
 // local authentication
-LoginUtil.authenticateLogin = function (req, res) {
+AuthUtil.authenticateLogin = function (req, res) {
     passport.authenticate('local', function (err, user, info) {
         
         var token;
@@ -111,7 +111,7 @@ LoginUtil.authenticateLogin = function (req, res) {
 
 };
 
-LoginUtil.routingAuth = function() {
+AuthUtil.routingAuth = function() {
     var userSchemaObj   = new userSchema();
     return userSchemaObj.auth;
 };
