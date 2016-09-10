@@ -70,7 +70,9 @@ Register.createAppointment = function (appointmentReq, callback) {
             addProfiles(profilesForBulk, function (status, result) {
                 var date2 = new Date();
                 logger.debug("time for appointment processing : " + date1.getTime() + " : " + date2.getTime() + " : " +  (date2 - date1));
-                callback(status, result);
+                addBooking(addBooking.service_provider, user.uuid, user.kipenzis, function(status, result) {
+                    callback(status, result); 
+                });
             });
        
         });
@@ -97,8 +99,23 @@ var addProfiles = function(profiles, callback) {
     });
 };
 
-var addBooking = function() {
+var addBooking = function(service_provider, user_uuid, kipenzis_uuid, callback) {
     //service provider, user, pets, token
+    var document = {};
+    document.s_p        = service_provider;
+    document.user       = user_uuid;
+    document.kipenzis   = kipenzis_uuid;
+    
+    var token   = utils.generateToken();
+    
+    db.insert(config.couchbase.buckets.relational_transactions, token, document, function(error, result){
+        if(error) {
+            //db error
+            logger.error("addBooking", "DB",  error);
+            return callback(500, {status: false, type: 'db', message: message.support.contact_support});   
+        }
+        return callback(200, {token: token});
+    });
 };
 
 

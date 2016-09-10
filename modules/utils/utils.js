@@ -92,7 +92,7 @@ Utils.decodeCookie = function (value) {
 
 // generate token
 Utils.generateToken = function () {
-    return (new Date().getTime()).toString(36);
+    return (new Date().getTime()).toString(36).toUpperCase();
 };
 
 Utils.generateUUID = function () {

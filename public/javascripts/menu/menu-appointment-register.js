@@ -5,7 +5,7 @@ app.service('appointment_service',function(){
 });
 
 // Menu - Appointments
-app.controller('appointmentRegisterController', function($http, $scope) {
+app.controller('appointmentRegisterController', function($http, $scope, userService) {
     
     $scope.appointment  = {};
     
@@ -13,6 +13,7 @@ app.controller('appointmentRegisterController', function($http, $scope) {
     $scope.appointment.user         = new userVO();
     $scope.appointment.kipenzis     = [];
     $scope.appointment.time_slot    = "";
+    $scope.appointment.service_provider = userService.sub;
     
     $scope.selected_kipenzi = $scope.appointment.kipenzis[0];
     
