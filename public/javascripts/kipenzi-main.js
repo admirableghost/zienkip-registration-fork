@@ -26,19 +26,6 @@ app.run(function($http, $rootScope, $state) {
         }
     };
     
-    $rootScope.showHideButton = {
-        false   : "fa fa-chevron-up",
-        true    : "fa fa-chevron-down" 
-    }
-    
-    $rootScope.resizeDiv = function (caller, $event) {
-        if(caller.hide) {
-            caller.hide = false;
-        } else {
-            caller.hide = true;
-        }
-    };
-    
     $state.go('menu.home');
 
 }) ;

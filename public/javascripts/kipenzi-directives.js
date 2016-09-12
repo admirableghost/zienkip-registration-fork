@@ -11,7 +11,7 @@ app.directive('buttonPanel', ['$compile', function($compile) {
          
         ngModel.$setViewValue(scope.showHide);
          
-        scope.toggleShowHide = function toggleShowHide() {
+        scope.toggleShowHide = function () {
             scope.showHide = !scope.showHide;
             ngModel.$setViewValue(scope.showHide);
         };
@@ -29,7 +29,7 @@ app.directive('buttonPanel', ['$compile', function($compile) {
 		require:'ngModel',
 		scope: {
 			isDisabled: '=',
-            showHide: "=show"
+            showHide: "@show"
 		},
         
         template:
@@ -51,26 +51,38 @@ app.directive('buttonPanel', ['$compile', function($compile) {
 	};
 }]);
 
-app.directive('kipenziDiv', ['buttonPanel','$compile', function(buttonPanel,$compile) {
+app.directive('kipenziDiv', ['$compile', function($compile) {
+    
+    var link = function (scope, element, attrs, ngModel) {
+        
+        scope.dummy = function ($event, caller) {
+            console.log('x');
+        };
+    }
+    
     return {
         scope: {
-            heading: '='
+            heading: '@',
+            subheading: '@'
         },
         template: 
         
         '<div class="x_panel">' +
           '<div class="x_title">' +
-            '<h2>{{heading}}<small>check mobile number and enter</small></h2>' +
-            '<span class="badge bg-blue">Token : {{appointment.token}}</span>' +
+            '<h2>{{heading}}<small>{{subheading}}</small></h2>' +
             '<div button-panel ng-model="show" show=true></div>'  +
             '<div class="clearfix"></div>' +
             '</div>' +
           '<div class="x_content" ng-show="show">' +
             '<br />' +
             '<div>' +
-              //content
+              '<a href="" ng-click="dummy($event, this)">xyz</a>' +
             '</div>' +
           '</div>' +
-        '</div>'
+        '</div>',
+        
+        compile: function (element, attrs) {
+            return link;
+        }
     }
 }]);

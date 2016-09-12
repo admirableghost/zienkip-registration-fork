@@ -10,10 +10,10 @@
           <div class="x_title">
             <h2>User Appointment<small>check mobile number and enter</small></h2>
             <span class="badge bg-blue">Token : {{appointment.token}}</span>
-            <div button-panel ng-model="xcv" show=true></div>
+            <div button-panel ng-model="show1" show=true></div>
             <div class="clearfix"></div>
             </div>
-          <div class="x_content" ng-show="xcv">
+          <div class="x_content" ng-show="show1">
             <br />
             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
@@ -45,6 +45,8 @@
           </div>
         </div>
           
+<!--        <div kipenzi-div heading="User Appointment" subheading="check user with mobile number"></div> -->
+          
         <!-- Pet Profile div -->
         
         <div class="x_content">
@@ -65,20 +67,10 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Pet Information<small>know your pet well</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link" ng-click="resizeDiv(this, $event)"><i class="{{showHideButton[this.hide == true]}}"></i></a></li>
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a></li>
-                                <li><a href="#">Settings 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                    </ul>
+                    <div button-panel ng-model="show2" show=true></div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content"  ng-show="!(this.hide == true)">
+                <div class="x_content"  ng-show="show2">
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
