@@ -11,7 +11,7 @@ app.controller('appointmentRegisterController', function($http, $scope, userServ
     
     $scope.appointment.token        = "";
     $scope.appointment.user         = new userVO();
-    $scope.appointment.kipenzis     = [];
+    $scope.appointment.kipenzis     = [new kipenziVO()];
     $scope.appointment.time_slot    = "";
     $scope.appointment.service_provider = userService.sub;
     

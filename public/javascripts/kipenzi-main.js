@@ -1,6 +1,7 @@
 'use strict';
 
-var app = angular.module('kipenzi-bro', ['kipenzi-router', 'kipenzi-login', 'kipenzi-dashboard',
+var app = angular.module('kipenzi-bro', ['kipenzi-router', 'kipenzi-directives', 
+                                         'kipenzi-login', 'kipenzi-dashboard',
                                          'menu-home', 'menu-appointment-register', 'menu-appointment-history', 'menu-calendar', 'menu-inventory', 'menu-profile_management']);
 
 // Holds the user details
@@ -19,9 +20,22 @@ app.service('userService', function(kipenziFactory) {
 app.run(function($http, $rootScope, $state) {
     
     // call this method to route to anywhere in the app
-    $rootScope.go = function(state) {
+    $rootScope.go = function (state) {
         if(state) {
             $state.go(state);
+        }
+    };
+    
+    $rootScope.showHideButton = {
+        false   : "fa fa-chevron-up",
+        true    : "fa fa-chevron-down" 
+    }
+    
+    $rootScope.resizeDiv = function (caller, $event) {
+        if(caller.hide) {
+            caller.hide = false;
+        } else {
+            caller.hide = true;
         }
     };
     
