@@ -1,179 +1,188 @@
 <!-- Appointment Registration page - partial -->
 
-<div class="right_col" role="main">
+<div id="appointment">
     <div class="x_panel">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-          
-        <!-- User Profile div -->
-          
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>User Appointment<small>check mobile number and enter</small></h2>
-            <span class="badge bg-blue">Token : {{appointment.token}}</span>
-            <div button-panel ng-model="show1" show=true></div>
-            <div class="clearfix"></div>
-            </div>
-          <div class="x_content" ng-show="show1">
-            <br />
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-              <div class="form-group">
-                <label class="control-label col-md-2 col-sm-1 col-xs-4" for="first-name">First Name <span class="required">*</span>
-                </label>
-                <div class="col-md-2 col-sm-2 col-xs-4">
-                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" ng-model="appointment.user.fname" >
-                </div>
-                <label class="control-label col-md-3 col-sm-2 col-xs-8" for="last-name">Last Name <span class="required">*</span>
-                </label>
-                <div class="col-md-2 col-sm-2 col-xs-4">
-                  <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" ng-model="appointment.user.lname">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="mobile-no" class="control-label col-md-2 col-sm-1 col-xs-4">Mobile No.<span class="required">*</span> </label>
-                <div class="col-md-2 col-sm-2 col-xs-4">
-                  <input id="mobile-no" class="form-control col-md-2 col-xs-6" type="text" name="mobile-no" ng-model="appointment.user.mobile">
-                </div>
-                <div class="col-md-2 col-sm-1 col-xs-2">  
-                    <button type="button" class="btn btn-primary" ng-click="checkMobile()">Check</button>
-                </div>
-                <label class="control-label col-md-1 col-sm-1 col-xs-4">Gender</label>
-                <div toggle-switch class="switch-primary" html="htmlSwitchStatus" knob-label='GENDER' on-label='MALE' off-label='FEMALE' ng-model="appointment.user.gender"></div>
-              </div>
-             
-            </form>
-          </div>
-        </div>
-          
-<!--        <div kipenzi-div heading="User Appointment" subheading="check user with mobile number"></div> -->
-          
-        <!-- Pet Profile div -->
-        
-        <div class="x_content">
-            <div class="col-xs-2">
-                <!-- pet profile list -->
-                <ul class="nav nav-tabs tabs-left">
-                    <li ng-repeat="kipenzi in appointment.kipenzis"><a href="" data-toggle="tab" ng-click="selectKipenzi(this)">{{kipenzi.name}}</a></li>
-                    <li><a href="" data-toggle="tab" ng-click=addKipenzi()>Add kipenzi</a></li>
-                </ul>
-            </div>
-
-            <div class="col-xs-10">
-              <!-- Tab panes -->
-            <div class="tab-content">
-            <div class="tab-pane active" id="home">
-            <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            
+            <!-- User Profile div -->
+            
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Pet Information<small>know your pet well</small></h2>
-                    <div button-panel ng-model="show2" show=true></div>
-                    <div class="clearfix"></div>
+                    <h3>User Appointment<small>  check mobile number and enter</small>
+                        <div button-panel ng-model="show1" has-show-hide=true></div>
+                    </h3>
                 </div>
-                <div class="x_content"  ng-show="show2">
+                <div class="x_content" ng-show="show1">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2 col-sm-2 col-xs-4" for="first-name">Name <span class="required">*</span></label>
-                        <div class="col-md-2 col-sm-2 col-xs-4">
-                            <input type="text" id="k_name" required="required" class="form-control col-md-7 col-xs-12" ng-model=selected_kipenzi.name>
-                        </div>
-                        <label class="control-label col-md-2 col-sm-2 col-xs-4">Type</label>
-                        <div class="col-md-2 col-sm-2 col-xs4">
-                            <select class="form-control" ng-model="selected_kipenzi.kipenzi_type">
-                                <option>Dog</option>
-                                <option>Cat</option>
-                            </select>
-                        </div>
-                        <label class="control-label col-md-2 col-sm-1 col-xs-2">Breed</label>
-                        <div class="col-md-2 col-sm-2 col-xs4">
-                            <select class="form-control" ng-model="selected_kipenzi.breed">
-                                <option>Bull dog</option>
-                                <option>Beagle</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div id="kipenzi_dob">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-4">Date Of Birth <span class="required">*</span>
+                    <form name="userForm" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-sm-1 col-xs-4" for="first-name">
+                                First Name 
+                                <span class="required">*</span>
                             </label>
                             <div class="col-md-2 col-sm-2 col-xs-4">
-                                <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" ng-model="selected_kipenzi.dob">
+                                <input type="text" name="fname" required=true class="form-control col-md-7 col-xs-12" ng-model="appointment.user.fname" >
+                            </div>
+                            <label class="control-label col-md-3 col-sm-2 col-xs-8" for="last-name">Last Name <span class="required">*</span></label>
+                            <div class="col-md-2 col-sm-2 col-xs-4">
+                                <input type="text" id="last-name" name="last-name" required=true class="form-control col-md-7 col-xs-12" ng-model="appointment.user.lname">
+                            </div>
+                            
+                            <span class="badge bg-blue">Token : </span><span class="badge bg-blue">{{appointment.token}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile-no" class="control-label col-md-2 col-sm-1 col-xs-4">Mobile No.<span class="required">*</span> </label>
+                            <div class="col-md-2 col-sm-2 col-xs-4">
+                                <input type="text" id="mobile-no" class="form-control col-md-2 col-xs-6" type="number" name="mobile-no" international-phone-number ng-model="appointment.user.mobile" required=true>
+                            </div>
+                            <div class="col-md-2 col-sm-1 col-xs-2">  
+                                <button type="button" class="btn btn-primary" ng-click="checkMobile()">Check</button>
+                            </div>
+                            <label class="control-label col-md-1 col-sm-1 col-xs-4">Gender</label>
+                            <div toggle-switch class="switch-primary" html="htmlSwitchStatus" knob-label='GENDER' on-label='MALE' off-label='FEMALE' ng-model="appointment.user.gender"></div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Pet Profile div -->
+            
+            <div class="x_content">
+                <div class="x_panel">
+                    <div class="col-xs-2">
+                        <!-- pet profile list -->
+                        
+                        <md-list>
+                            <div ng-repeat="kipenzi in appointment.kipenzis" class="button_nav {{this.kipenzi.$$hashKey == selected_kipenzi.$$hashKey}}">
+                                <md-list-item class="md-2-line" ng-click="selectKipenzi(this)">
+                                    <md-checkbox ng-model="kipenzi.needAppointment" aria-label="cb_{{this.kipenzi.$$hashKey}}"></md-checkbox>
+                                    <div class="md-list-item-text">
+                                        <h3><b>{{kipenzi.name}}</b></h3>
+                                        <span class="badge bg-blue" ng-if="!kipenzi.uuid">New </span>
+                                    </div>
+                                </md-list-item>
+                            </div>
+                            <div class="button_nav add">
+                                <md-list-item class="md-2-line" ng-click="addKipenzi()">
+                                    <div class="md-list-item-text">
+                                        <h3><b><i class="fa fa-plus"></i>   Add Kipenzi</b></h3>
+                                    </div>
+                                </md-list-item>
+                            </div>
+                        </md-list>
+                    </div>
+                    
+                    <div class="col-xs-10">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_title">
+                                            <h3>Pet Information<small>  know your pet well</small>
+                                                <div button-panel ng-model="show2" has-show-hide=true has-close=true on-close="removeKipenzi(this)"></div>
+                                            </h3>
+                                        </div>
+                                        <div class="x_content"  ng-show="show2">
+                                            <br />
+                                            <form name="kipenziForm" data-parsley-validate class="form-horizontal form-label-left">
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-1 col-sm-2 col-xs-4" for="first-name">Name <span class="required">*</span></label>
+                                                    <div class="col-md-3 col-sm-2 col-xs-4">
+                                                        <input type="text" id="k_name" required="required" class="form-control col-md-7 col-xs-12" ng-model=selected_kipenzi.name>
+                                                    </div>
+                                                    <label class="control-label col-md-1 col-sm-2 col-xs-4">Type</label>
+                                                    <div class="col-md-2 col-sm-2 col-xs4">
+                                                        <select class="form-control" ng-model="selected_kipenzi.kipenzi_type">
+                                                            <option>Dog</option>
+                                                            <option>Cat</option>
+                                                        </select>
+                                                    </div>
+                                                    <label class="control-label col-md-1 col-sm-1 col-xs-2">Breed</label>
+                                                    <div class="col-md-2 col-sm-2 col-xs4">
+                                                        <select class="form-control" ng-model="selected_kipenzi.breed">
+                                                            <option>Bull dog</option>
+                                                            <option>Beagle</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div id="kipenzi_dob">
+                                                        <label class="control-label col-md-1 col-sm-2 col-xs-4">DOB <span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-3 col-sm-2 col-xs-4">
+                                                            <md-datepicker md-placeholder="dd-mmm-yyyy" ng-model="selected_kipenzi.dob"></md-datepicker>
+                                                        </div>
+                                                    </div>
+                                                    <div id="kipenzi_gender">
+                                                        <label class="control-label col-md-1 col-sm-2 col-xs-4">Gender</label>
+                                                        <div toggle-switch class="switch-primary" html="htmlSwitchStatus" knob-label='GENDER' on-label='MALE' off-label='FEMALE' ng-model="selected_kipenzi.gender"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="ln_solid"></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="x_title">
+                                                        <h4>Medical History</h4>
+                                                        <!--                  <div class="clearfix"></div>-->
+                                                    </div>
+                                                    <div class="x_content">
+                                                        <table id="datatable" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Name</th>
+                                                                    <th>Position</th>
+                                                                    <th>Office</th>
+                                                                    <th>Age</th>
+                                                                    <th>Start date</th>
+                                                                    <th>Salary</th>
+                                                                </tr>
+                                                            </thead>
+                                                            
+                                                            
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Tiger Nixon</td>
+                                                                    <td>System Architect</td>
+                                                                    <td>Edinburgh</td>
+                                                                    <td>61</td>
+                                                                    <td>2011/04/25</td>
+                                                                    <td>$320,800</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Donna Snider</td>
+                                                                    <td>Customer Support</td>
+                                                                    <td>New York</td>
+                                                                    <td>27</td>
+                                                                    <td>2011/01/25</td>
+                                                                    <td>$112,000</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <button type="submit" class="btn btn-primary" ng-click="bookAppointment(userForm)">Book Appointment</button>
+                                                    <button type="button" class="btn btn-success">Cancel</button>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <!--              </div>-->
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
-                        <div id="kipenzi_gender">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-4">Gender</label>
-                            <div toggle-switch class="switch-primary" html="htmlSwitchStatus" knob-label='GENDER' on-label='MALE' off-label='FEMALE' ng-model="selected_kipenzi.gender"></div>
-                        </div>
                     </div>
-                    <div class="ln_solid"></div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-               <div class="x_title">
-                  <h2>Medical History<small></small></h2>
-                  <div class="clearfix"></div>
+                    
                 </div>
-                  <div class="x_content">
-                  <table id="datatable" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                      </tr>
-                    </thead>
-
-
-                    <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                      </tr>
-                      <tr>
-                        <td>Donna Snider</td>
-                        <td>Customer Support</td>
-                        <td>New York</td>
-                        <td>27</td>
-                        <td>2011/01/25</td>
-                        <td>$112,000</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-                      
-                    <div class="form-group">
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button type="button" class="btn btn-primary" ng-click="bookAppointment()">Book Appointment</button>
-                        <button type="button" class="btn btn-success">Cancel</button>
-                      </div>
-                    </div>
-
-                  </form>
-    
-                  
-                </div>
-              </div>
             </div>
+        </div>
     </div>
-
-                </div>
-                <div class="tab-pane" id="profile">Profile Tab.</div>
-                <div class="tab-pane" id="messages">Messages Tab.</div>
-                <div class="tab-pane" id="settings">Settings Tab.</div>
-              </div>
-            </div>
-
-
-      </div>
-      </div>
-      </div>
-    </div>
+</div>

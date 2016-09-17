@@ -3,9 +3,10 @@
 var forge   = require('node-forge');
 var Cookies = require('cookies');
 var Buffer  = require('buffer/').Buffer;
-var uuid    = require('uuid')
+var uuid    = require('uuid');
 
-var config  = require('../../config');
+var config          = require('../../config');
+var liveFeedServer  = require('../routes/liveFeedServer'); 
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -97,4 +98,10 @@ Utils.generateToken = function () {
 
 Utils.generateUUID = function () {
     return uuid.v4();
+}
+
+// live feed
+Utils.sendLiveFeed = function (data) {
+    console.log('Inside UTils now' + liveFeedServer.getIOEmitter());
+    liveFeedServer.getIOEmitter().sendData(data);
 }

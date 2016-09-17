@@ -21,11 +21,29 @@ var kipenziVO = function (kipenzi) {
         kipenzi = {};
     }
     
-    this.uuid    = kipenzi.uuid;
-    this.name    = kipenzi.name;
-    this.type    = kipenzi.type;
-    this.breed   = kipenzi.breed;
-    this.gender  = kipenzi.gender;
-    this.dob     = kipenzi.dob;
-    this.type    = kipenzi.type || "kipenzi";
+    this.uuid           = kipenzi.uuid;
+    this.name           = kipenzi.name;
+    this.kipenzi_type   = kipenzi.kipenzi_type;
+    this.breed          = kipenzi.breed;
+    this.gender         = kipenzi.gender;
+    this.type           = kipenzi.type || "kipenzi";
+    
+    if(kipenzi.dob) {
+        this.dob    = new Date(kipenzi.dob);   
+    } else {
+        this.dob    = new Date(); 
+    }
+}
+
+var validationResponseVO = function () {
+    this.status = true;
+    this.errors = [];
+    
+    var addValidationResponse = function (valStatus, valErrors) {
+        status = status & valStatus;
+        
+        for(var error in valErrors) {
+            errors.push(errors[error]);
+        }
+    }
 }

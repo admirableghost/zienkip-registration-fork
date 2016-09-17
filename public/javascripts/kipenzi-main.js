@@ -1,18 +1,38 @@
 'use strict';
 
-var app = angular.module('kipenzi-bro', ['kipenzi-router', 'kipenzi-directives', 
-                                         'kipenzi-login', 'kipenzi-dashboard',
-                                         'menu-home', 'menu-appointment-register', 'menu-appointment-history', 'menu-calendar', 'menu-inventory', 'menu-profile_management']);
+var app = angular.module('kipenzi-bro', [// angular specific
+                                         'ngMaterial', 'ngMessages',
+    
+                                         // vendors
+                                         'internationalPhoneNumber', 'toggle-switch',
+    
+                                         // kipenzi - global
+                                         'kipenzi-router', 'kipenzi-directives', 
+                                         'kipenzi-login',
+                                         'kipenzi-dashboard',
+    
+                                         // kipenzi - specific
+                                         'menu-home',
+                                         'menu-appointment', 'menu-appointment-register', 'menu-appointment-history',
+                                         'menu-calendar',
+                                         'menu-inventory-entry', 'menu-inventory-history',
+                                         'menu-profile_management']);
 
 // Holds the user details
 // On page reload will take the session storage contents and load it to avoid losing data
-app.service('userService', function(kipenziFactory) {        
+app.service('userService', function(kipenziFactory, liveFeedServer) {        
     
     var token = window.sessionStorage.getItem('kipenzi-token');
     
     if (token) {
         kipenziFactory.loadUserService(this, token);
+        liveFeedServer.getLifeFeedConnection();
     }
+    
+})
+
+// Holds the static data required for app to run
+app.service('staticData', function() {        
     
 })
 
@@ -25,6 +45,13 @@ app.run(function($http, $rootScope, $state) {
             $state.go(state);
         }
     };
+        
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+        $rootScope.currentState = toState.name;
+    });
+    
+    $rootScope.currentMenu  = "menu.home";
+    $rootScope.submenus     = undefined;
     
     $state.go('menu.home');
 
@@ -68,8 +95,23 @@ app.factory('kipenziFactory', function() {
 });
 
 // app level config to modify and providers
-app.config(['$httpProvider','$authProvider', function($httpProvider,$authProvider) {
-        $httpProvider.interceptors.push('sessionInjector');
+app.config(['$httpProvider','$authProvider', 'ipnConfig', '$mdDateLocaleProvider', function($httpProvider, $authProvider , ipnConfig, $mdDateLocaleProvider) {
+    
+    ipnConfig.defaultCountry = 'in';
+    ipnConfig.preferredCountries = ['in', 'us', 'uk', 'gb'];
+    ipnConfig.skipUtilScriptDownload = true;
+    ipnConfig.nationalMode=false;
+    
+    $mdDateLocaleProvider.formatDate = function(date) {
+        return date ? moment(date).format('DD-MMM-YYYY') : '';
+    };
+    
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+        var m = moment(dateString, 'DD-MMM-YYYY', true);
+        return m.isValid() ? m.toDate() : new Date(NaN);
+    };
+        
+    $httpProvider.interceptors.push('sessionInjector');
 //           $authProvider.storageType = 'sessionStorage';
 
 //        $authProvider.facebook({
@@ -90,3 +132,27 @@ app.config(['$httpProvider','$authProvider', function($httpProvider,$authProvide
 //            }
 //        });
     }]);
+
+app.factory('liveFeedServer',function(appointmentHistoryFactory, inventoryHistoryFactory, $interval){
+		var liveFeedServer = {
+			getLifeFeedConnection : function(){
+				var socket = io.connect(window.location.protocol + '//' +  window.location.hostname + ":8701",{ query: "foo=bar&type=admin" });
+				socket.on('Event',function(data){
+					// DO NOTHING
+				});
+				socket.on('AppointmentEvent',function(data){
+                    alert('Live Event')
+                    console.log('Appointment event coming up');
+					appointmentHistoryFactory.updateLiveFeedData(data);
+				});
+				socket.on('InventoryEvent',function(data){
+					inventoryHistoryFactory.updateLiveFeedData(data);
+				});
+			}
+		}
+		 $interval(function () {
+			//	alert('Timer Alert')
+        	//$scope.myHeader = "How are you today?";
+    	}, 20	);
+		return liveFeedServer;
+	});

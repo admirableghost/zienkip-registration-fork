@@ -132,6 +132,10 @@ Register.getUserAndPetDetails = function (mobile, callback) {
         
             var user_and_pet_details = {}; 
             user_and_pet_details.user = result[0][0];
+        
+            if (!user_and_pet_details.user.kipenzis || !(user_and_pet_details.user.kipenzis.length > 0)) {
+                return callback(user_and_pet_details, null);
+            }
             
             db.getMulti(config.couchbase.buckets.profiles, user_and_pet_details.user.kipenzis, function(error, result) {
                 
@@ -139,8 +143,10 @@ Register.getUserAndPetDetails = function (mobile, callback) {
                 
                 for(var uuid in result) {
                     var kipenzi = result[uuid].value;
-                    kipenzi.uuid = uuid;
-                    user_and_pet_details.kipenzis.push(kipenzi);
+                    if(kipenzi) {
+                        kipenzi.uuid = uuid;
+                        user_and_pet_details.kipenzis.push(kipenzi);
+                    }
                 }
                 
                 callback(user_and_pet_details, null);

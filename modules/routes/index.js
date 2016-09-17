@@ -24,15 +24,6 @@ app.post('/login', authUtil.authenticateLogin);
 //});
 
 
-app.post('/api/appointment', /*authUtil.routingAuth,*/ function(req, res, next){
-    
-    appReg.createAppointment(req.body.appointment, function(status, appointment) {
-        res.status(status);
-        res.json(appointment);
-    });
-    
-});
-
 app.post('/api/getUserAndPetDetails', /*authUtil.routingAuth,*/ function(req, res, next){
     
     console.log(JSON.stringify(req.body));
@@ -44,4 +35,33 @@ app.post('/api/getUserAndPetDetails', /*authUtil.routingAuth,*/ function(req, re
         res.json(user);
     });
     
+});
+
+app.post('/api/appointment', /*authUtil.routingAuth(),*/ function(req, res){
+//	res.send("Sucess");
+    appReg.createAppointment(req.body.appointment, function(status, appointment) {
+        var pingObject = {};
+        
+        pingObject.orgId = 'TestOrgID';
+        pingObject.event = 'AppointmentEvent';
+	    pingObject.msg = req.body.appointment;
+	    console.log('index.js	:	/api/appointment - Sending Appointment Live Feed');
+	    utils.sendLiveFeed(pingObject);
+        
+        res.status(status);
+        res.json(appointment);
+    });
+    
+});
+
+app.post('/api/inventory', /*authUtil.routingAuth(),*/ function(req, res){
+    	
+	var pingObject = {};
+	pingObject.orgId = 'TestOrgID';
+	pingObject.event = 'InventoryEvent';
+	pingObject.msg = req.body.inventory;
+	console.log('index.js	:	/api/inventory - Sending Inventory Live Feed');
+	utils.sendLiveFeed(pingObject);
+	res.send("Sucess");
+	
 });

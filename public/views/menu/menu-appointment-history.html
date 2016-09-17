@@ -1,7 +1,24 @@
     <!-- Appointment History page - partial -->
-
     <div class="right_col" role="main">
-        <div class="x_panel">
-            <h1>Yet to have updates !!!</h1>
+	    <div class="x_panel">
+ 			<table st-table="displayedCollection" st-safe-src="appointmentEntries" class="table table-striped">
+				<thead>
+					<tr>
+						<th st-sort="user.fname">Kip Name</th>
+						<th st-sort="bookedDate">Appointment Date</th>
+						<th st-sort="time_slot">Time</th>
+					</tr>
+					<tr>
+						<th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="row in displayedCollection">
+					<td>{{row.user.fname}}</td>
+					<td>{{row.bookedDate | date}}</td>
+					<td>{{row.time_slot}}</td>
+				</tr>
+				</tbody>
+			</table> 
         </div>
     </div>

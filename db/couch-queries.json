@@ -4,7 +4,7 @@
         "get_user_using_uuid"   : "select meta(p).id as uuid, p.* from profiles p where meta(p).id = $1"
     },
     "menu": {
-        "get_menus"  : "select name, submenu, state, icon, label from global_static where app = $1 and type = $2 and active =true and array_contains(user_type, $3)and array_contains(user_role, $4) order by display_order"
+        "get_menus"  : "select name, submenus, state, icon, label from global_static where app = $1 and type = $2 and active =true and array_contains(user_type, $3)and array_contains(user_role, $4) order by display_order"
     },
     "appointment" : {
         "get_user_using_mobile" : "select p.fname, p.lname, p.mobile, p.gender, p.kipenzis from profiles p where p.mobile = $1"

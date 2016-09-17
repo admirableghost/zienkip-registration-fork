@@ -6,14 +6,20 @@ var cookieParser    = require('cookie-parser');
 var bodyParser  = require('body-parser');
 var passport    = require('passport');
 var cors        = require('cors');
+var io          = require('socket.io');
 
 var config      = require('./config');
 var db          = require('./db/couchbase');
 var index       = require('./modules/routes/index');
 var uploads     = require('./modules/routes/uploads');
+var socketIO    = require('./modules/routes/liveFeedServer');
 
 require('./modules/auth/passport');
 
+//LiveFeedServer
+socketIO.initializeServer(io);
+
+//Database
 db.start();
 
 var app = express();

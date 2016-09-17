@@ -1,11 +1,23 @@
-// Module for Appointment History
+var app = angular.module('menu-appointment-history',['smart-table']);    
+   
+app.factory('appointmentHistoryFactory', function() {
 
-var app = angular.module('menu-appointment-history', []);
-
-app.service('appointmentHistoryService',function(){
-    this.appointmentList = null;
+	var appointmentEntries = [];
+	
+	return {
+		
+		updateLiveFeedData : function(liveItem) {
+            alert('Incoming data from appointment');
+			appointmentEntries.push(liveItem);
+		},
+		
+		getTableData : function () {
+			return appointmentEntries;
+		}
+		
+	}
 });
-
-app.controller('appointmentHistoryController', function($scope, $http, $state) {
-    
+ 	   
+app.controller('appointmentHistoryController', function ($scope, appointmentHistoryFactory) {
+	$scope.appointmentEntries = appointmentHistoryFactory.getTableData();
 });

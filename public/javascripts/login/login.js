@@ -1,6 +1,6 @@
 var app = angular.module('kipenzi-login', ['satellizer']);
 
-app.controller('loginController', function($scope, $rootScope, $http, $state, userService, kipenziFactory) {
+app.controller('loginController', function($scope, $rootScope, $http, $state, userService, kipenziFactory, liveFeedServer) {
         
 //                        <button ng-click="facebookauth()">SignInFacebook</button>
 //                        <button ng-click="authFlow()">Get User</button>
@@ -23,6 +23,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, us
             }).then(function(response) {
                 
                 kipenziFactory.loadUserService(userService, response.data.token);
+                liveFeedServer.getLifeFeedConnection();
                 
                 window.sessionStorage.setItem('kipenzi-token', JSON.stringify(userService.token));
                 

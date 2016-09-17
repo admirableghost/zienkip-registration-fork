@@ -27,6 +27,8 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'dashboardController',
             abstract: true
         })
+        
+        /* Home */
     
         .state('menu.home', {
             url:'/home',
@@ -34,19 +36,29 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'homeController'
         })
         
-        .state('menu.appointment-register', {
-            url:'/appointment-register',
+        /* Appointment */
+        
+        .state('menu.appointment', {
+            url:'/appointment',
+            templateUrl:"../views/menu/menu-appointment.html",
+            controller: 'appointmentController'
+        })
+        
+        .state('menu.appointment.register', {
+            url:'/register',
             templateUrl:"../views/menu/menu-appointment-register.html",
             controller: 'appointmentRegisterController'
         })
     
-        .state('menu.appointment-history', {
-            url:'/appointment-history',
+        .state('menu.appointment.history', {
+            url:'/history',
             templateUrl:"../views/menu/menu-appointment-history.html",
             controller: 'appointmentHistoryController'
         })
     
-         .state('menu.profile_management', {
+        /* profile management */    
+    
+        .state('menu.profile_management', {
             abstract : true,
             url:'/ProfileManagement_Main',
             templateUrl:"../views/menu/menu-profile_management-main.html",
@@ -57,6 +69,20 @@ router.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             url:'/Calendar',
             templateUrl:"../views/menu/menu-calendar.html",
             controller: 'calendarController'
+        })
+    
+        /* Inventory */
+    
+        .state('menu.inventory-entry', {
+            url:'/inventory-entry',
+            templateUrl:"../views/menu/menu-inventory-entry.html",
+            controller: 'inventoryEntryController'
+        })
+    
+        .state('menu.inventory-history', {
+            url:'/inventory-history',
+            templateUrl:"../views/menu/menu-inventory-history.html",
+            controller: 'inventoryHistoryController'
         })
         //----------------------------------
 
