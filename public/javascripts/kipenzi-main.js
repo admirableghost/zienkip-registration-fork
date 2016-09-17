@@ -20,13 +20,12 @@ var app = angular.module('kipenzi-bro', [// angular specific
 
 // Holds the user details
 // On page reload will take the session storage contents and load it to avoid losing data
-app.service('userService', function(kipenziFactory, liveFeedServer) {        
+app.service('userService', function(kipenziFactory) {        
     
     var token = window.sessionStorage.getItem('kipenzi-token');
     
     if (token) {
-        kipenziFactory.loadUserService(this, token);
-        liveFeedServer.getLiveFeedConnection();
+        kipenziFactory.postLogin(this, token);
     }
     
 })
@@ -65,18 +64,13 @@ app.factory('sessionInjector', ['userService', function(userService, $rootScope)
             config.headers.Authorization = 'Bearer ' + userService.token;
             return config;
         }
-//            ,responseError: function (response) {
-//           if (response.status === 401) {
-//               $rootScope.go('login');
-//           }     
-//       }
     };
     return sessionInjector;    
     
 }]);
 
 // Add all the necessary app level factory components
-app.factory('kipenziFactory', function() {
+app.factory('kipenziFactory', function(liveFeedServer) {
         
     var fac = {};
     
@@ -88,6 +82,12 @@ app.factory('kipenziFactory', function() {
         service.token   = token;
         service.sub     = payload.sub;
         service.menus   = payload.menus;
+    };
+    
+    fac.postLogin = function (service, token) {
+        
+        fac.loadUserService(service, token);
+        liveFeedServer.getLiveFeedConnection();
     };
     
     return fac;    
