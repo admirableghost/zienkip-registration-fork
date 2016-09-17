@@ -23,7 +23,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, us
             }).then(function(response) {
                 
                 kipenziFactory.loadUserService(userService, response.data.token);
-                liveFeedServer.getLifeFeedConnection();
+                liveFeedServer.getLiveFeedConnection();
                 
                 window.sessionStorage.setItem('kipenzi-token', JSON.stringify(userService.token));
                 

@@ -18,13 +18,7 @@ app.get('/', function (req, res) {
 
 app.post('/login', authUtil.authenticateLogin);
 
-//app.all('/*', authUtil.routingAuth, function(req, res, next){
-//    console.log('General Validations');
-//    next();
-//});
-
-
-app.post('/api/getUserAndPetDetails', /*authUtil.routingAuth,*/ function(req, res, next){
+app.post('/api/getUserAndPetDetails', authUtil.routingAuth(), function(req, res, next){
     
     console.log(JSON.stringify(req.body));
     
@@ -37,7 +31,7 @@ app.post('/api/getUserAndPetDetails', /*authUtil.routingAuth,*/ function(req, re
     
 });
 
-app.post('/api/appointment', /*authUtil.routingAuth(),*/ function(req, res){
+app.post('/api/appointment', authUtil.routingAuth(), function(req, res){
 //	res.send("Sucess");
     appReg.createAppointment(req.body.appointment, function(status, appointment) {
         var pingObject = {};
@@ -54,7 +48,7 @@ app.post('/api/appointment', /*authUtil.routingAuth(),*/ function(req, res){
     
 });
 
-app.post('/api/inventory', /*authUtil.routingAuth(),*/ function(req, res){
+app.post('/api/inventory', authUtil.routingAuth(), function(req, res){
     	
 	var pingObject = {};
 	pingObject.orgId = 'TestOrgID';
@@ -64,4 +58,16 @@ app.post('/api/inventory', /*authUtil.routingAuth(),*/ function(req, res){
 	utils.sendLiveFeed(pingObject);
 	res.send("Sucess");
 	
+});
+
+
+/******************************************************************
+*  keep this as the last method in the set 
+*  so that any other method covers the necessary set of validations 
+*  or not, if validations are not required
+*******************************************************************/
+
+app.all('/*', authUtil.routingAuth(), function(req, res, next){
+    console.log('General Validations');
+    next();
 });

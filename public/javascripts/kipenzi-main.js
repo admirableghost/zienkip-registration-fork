@@ -26,7 +26,7 @@ app.service('userService', function(kipenziFactory, liveFeedServer) {
     
     if (token) {
         kipenziFactory.loadUserService(this, token);
-        liveFeedServer.getLifeFeedConnection();
+        liveFeedServer.getLiveFeedConnection();
     }
     
 })
@@ -135,7 +135,7 @@ app.config(['$httpProvider','$authProvider', 'ipnConfig', '$mdDateLocaleProvider
 
 app.factory('liveFeedServer',function(appointmentHistoryFactory, inventoryHistoryFactory, $interval){
 		var liveFeedServer = {
-			getLifeFeedConnection : function(){
+			getLiveFeedConnection : function(){
 				var socket = io.connect(window.location.protocol + '//' +  window.location.hostname + ":8701",{ query: "foo=bar&type=admin" });
 				socket.on('Event',function(data){
 					// DO NOTHING

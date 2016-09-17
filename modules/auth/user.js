@@ -21,6 +21,7 @@ var auth = expressjwt({
 
 var userSchema = function (user) {
     this.user = user;
+    this.auth = auth;  //do not remove this auth since this is reqd for the routing auth
 }
 
 
